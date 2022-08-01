@@ -1,5 +1,7 @@
 package com.hoppinzq.service.util;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -10,6 +12,7 @@ import org.springframework.util.StringUtils;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,6 +21,36 @@ import java.util.Map;
 public class JSONUtil {
 
     private JSONUtil() {
+    }
+
+    public static JSONObject createJSONObject(){
+        return new JSONObject();
+    }
+
+    public static JSONObject createJSONObject(String key,String value){
+        JSONObject jsonObject=createJSONObject();
+        jsonObject.put(key,value);
+        return jsonObject;
+    }
+
+    public static JSONObject createJSONObject(Map map){
+        return new JSONObject(map);
+    }
+
+    public static JSONObject createJSONObject(String str){
+        return JSONObject.parseObject(str);
+    }
+
+    public static JSONArray createJSONArray(){
+        return new JSONArray();
+    }
+
+    public static JSONArray createJSONArray(String str){
+        return JSONArray.parseArray(str);
+    }
+
+    public static JSONArray createJSONArray(List list){
+        return new JSONArray(list);
     }
 
     /**
@@ -67,7 +100,7 @@ public class JSONUtil {
     private static String getLevelStr(int level) {
         StringBuffer levelStr = new StringBuffer();
         for (int levelI = 0; levelI < level; levelI++) {
-            levelStr.append("\t");
+            levelStr.append("  ");
         }
         return levelStr.toString();
     }
@@ -117,6 +150,31 @@ public class JSONUtil {
             throw new IllegalArgumentException(e);
         }
     }
+
+	public static void main(String[] args) {
+		Map<String, String> data = new HashMap<>();
+		data.put("aa", "11");
+		data.put("bb", "22");
+		data.put("cc", "33");
+		System.err.println(transMapToString(data));
+		StringBuffer retStr = new StringBuffer("https://www.baidu.com");
+		StringBuffer sb = new StringBuffer();
+		retStr.append("?");
+		if (data != null) {
+			Iterator i = data.entrySet().iterator();
+
+			while (i.hasNext()) {
+				Map.Entry<String, String> entry = (Map.Entry) i.next();
+				sb.append("&").append((String) entry.getKey()).append("=").append((String) entry.getValue());
+			}
+			String param = sb.substring(1);
+			retStr.append(param);
+		}
+
+		System.out.println(retStr);//https://www.baidu.com?aa=11&bb=22&cc=33
+	}
+
+
 
     /**
      * 返回值:String

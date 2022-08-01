@@ -19,8 +19,9 @@
     <dependencies>
         <dependency>
             <groupId>com.hoppinzq</groupId>
-            <artifactId>hoppinzq-service-gateway</artifactId>
+            <artifactId>hoppinzq-gateway-core</artifactId>
             <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

@@ -1,9 +1,11 @@
 package com.hoppinzq.service.core;
 
-import com.hoppinzq.service.aop.annotation.ApiMapping;
-import com.hoppinzq.service.aop.annotation.ApiServiceMapping;
+import com.hoppinzq.service.aop.annotation.*;
+import com.hoppinzq.service.bean.ServiceApiBean;
+import com.hoppinzq.service.bean.ServiceMethodApiBean;
 import com.hoppinzq.service.cache.apiCache;
 import com.hoppinzq.service.util.AopTargetUtil;
+import com.hoppinzq.service.util.StringUtil;
 import org.aopalliance.aop.Advice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,15 +13,15 @@ import org.springframework.aop.Advisor;
 import org.springframework.aop.framework.Advised;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
+import org.springframework.util.Assert;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
+import java.lang.reflect.*;
 import java.util.*;
 
 
 /**
  * api注册中心
+ * 该类在启动后会马上装配被注解环绕的类，应该稍微加快点速度
  * @author:ZhangQi
  */
 public class ApiStore {
@@ -30,16 +32,21 @@ public class ApiStore {
      * API 接口存储map
      */
     private Map<String, ApiRunnable> apiMap = apiCache.apiMap;
-    private static List<Map> outApiList = apiCache.outApiList;
-    /**
-     * @param applicationContext
-     */
+    private static List<ServiceApiBean> outApiList = apiCache.outApiList;
+
     public ApiStore(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
+    public boolean containsApi(String apiName, String version) {
+        return apiMap.containsKey(apiName + "_" + version);
+    }
+
+    public static ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
     /**
-     * 加载所有bean
+     * 加载所有bean,扫描api网关注解并存储
      */
     public void loadApiFromSpringBeans() {
         logger.debug("开始为网关注册接口");
@@ -63,54 +70,150 @@ public class ApiStore {
             }
 
             ApiServiceMapping apiServiceMapping = type.getAnnotation(ApiServiceMapping.class);
-            HashMap outApiMap = new HashMap();
-            List methodList = new ArrayList();
-            Boolean isAnnotation = false;
-            for (Method m : type.getDeclaredMethods()) {
-                // 通过反射拿到APIMapping注解
-                ApiMapping apiMapping = m.getAnnotation(ApiMapping.class);
-                if (apiMapping != null) {
-                    isAnnotation = true;
-                    String apiServiceTitle = "无服务标题";//临时默认值
-                    String apiServicDescription = "无服务描述";//临时默认值
-                    if (apiServiceMapping != null) {
-                        apiServiceTitle = apiServiceMapping.title();
-                        apiServicDescription = apiServiceMapping.description();
+            if(apiServiceMapping!=null){
+                ServiceApiBean serviceApiBean = new ServiceApiBean();
+                List<ServiceMethodApiBean> methodList = new ArrayList();
+                Boolean isAnnotation = false;
+                for (Method m : type.getDeclaredMethods()) {
+                    // 通过反射拿到APIMapping注解
+                    ApiMapping apiMapping = m.getAnnotation(ApiMapping.class);
+                    if (apiMapping != null) {
+                        isAnnotation = true;
+                        String apiServiceTitle =  apiServiceMapping.title();
+                        String apiServiceDescription = apiServiceMapping.description();
+                        serviceApiBean.apiServiceTitle=apiServiceTitle;
+                        serviceApiBean.apiServiceDescription = apiServiceDescription;
+                        ServiceMethodApiBean serviceMethodApiBean = new ServiceMethodApiBean();
+
+                        //同步锁注解,不可修改
+                        Servicelock servicelock=m.getAnnotation(Servicelock.class);
+                        if(servicelock!=null){
+                            serviceMethodApiBean.isLock=true;
+                        }
+                        //限流注解，不可修改
+                        ServiceLimit serviceLimit=m.getAnnotation(ServiceLimit.class);
+                        if(serviceLimit!=null){
+                            serviceMethodApiBean.isLimit=true;
+                            serviceMethodApiBean.limitNumber=serviceLimit.number();
+                        }
+                        //超时注解,不可修改
+                        Timeout timeout=m.getAnnotation(Timeout.class);
+                        if(timeout!=null){
+                            serviceMethodApiBean.isTimeout=true;
+                            serviceMethodApiBean.timeout=timeout.timeout();
+                        }
+                        //幂等注解，是否幂等
+                        AutoIdempotent idempotent=m.getAnnotation(AutoIdempotent.class);
+                        if(idempotent!=null){
+                            serviceMethodApiBean.tokenCheck=true;
+                        }
+                        //返回值是否封装注解，————
+                        ReturnTypeUseDefault returnTypeUseDefault=m.getAnnotation(ReturnTypeUseDefault.class);
+                        if(returnTypeUseDefault==null){
+                            serviceMethodApiBean.methodReturn=apiMapping.returnType();
+                        }else{
+                            serviceMethodApiBean.methodReturn=false;
+                        }
+
+                        //缓存注解，是否缓存
+                        ApiCache apiCache=m.getAnnotation(ApiCache.class);
+                        if(apiCache!=null){
+                            serviceMethodApiBean.isCache=true;
+                            serviceMethodApiBean.cacheTime=apiCache.time();
+                        }
+
+                        //权限
+                        ApiMapping.RoleType rightType=apiMapping.roleType();
+                        if(apiServiceMapping.roleType()==ApiServiceMapping.RoleType.NO_RIGHT){
+                            rightType=ApiMapping.RoleType.NO_RIGHT;
+                        }else if(apiServiceMapping.roleType()==ApiServiceMapping.RoleType.ALL_RIGHT){
+                            rightType=ApiMapping.RoleType.LOGIN;
+                        }else if(apiServiceMapping.roleType()==ApiServiceMapping.RoleType.ALL_ADMIN_RIGHT){
+                            rightType=ApiMapping.RoleType.ADMIN;
+                        }
+
+                        serviceMethodApiBean.methodRight=rightType;
+                        serviceMethodApiBean.methodTitle=apiMapping.title();
+                        serviceMethodApiBean.methodDescription=apiMapping.description();
+                        serviceMethodApiBean.serviceMethod=apiMapping.value();
+                        //判断服务接口的value是否重复，如果有重复的不让启动
+                        //使用断言暴力终止，你可以通过Spring自带的actuator去优雅的终止
+                        //使用System.exit(n);会造成死锁
+                        //这是因为我发现SpringApplicationShutdownHook处于BLOCKED状态，这个应该就是关闭Spring钩子函数被阻塞
+                        //主线程自然处于WAITING状态，可能的原因是某个线程持有锁但是没释放，LOCK.lock();会一直等待获取锁，导致阻塞
+                        Assert.isTrue(checkServiceIsE(serviceMethodApiBean.serviceMethod,methodList,type),
+                                StringUtil.isNotEmpty(serviceMethodApiBean.serviceMethod)?
+                                        "在类："+type.getName()+"里发现重复的服务接口的value值："+serviceMethodApiBean.serviceMethod:"在类："+type.getName()+"里发现有接口服务注册的服务名不存在");
+
+                        ApiMapping.Type requestType=apiMapping.type();
+                        serviceMethodApiBean.requestType=requestType;
+
+                        LocalVariableTableParameterNameDiscoverer u =
+                                new LocalVariableTableParameterNameDiscoverer();
+                        String[] params = u.getParameterNames(m);
+                        List array = new ArrayList();
+                        for (int i = 0; i < params.length; i++) {
+                            Map object = new HashMap();
+                            object.put("serviceMethodParamType", m.getParameterTypes()[i].getCanonicalName());
+                            object.put("serviceMethodParamTypeParams", getBeanFileds(m.getParameterTypes()[i]));
+                            object.put("serviceMethodParamName", params[i]);
+                            array.add(object);
+                        }
+                        serviceMethodApiBean.serviceMethodParams=array;
+                        Type genericReturnType=m.getGenericReturnType();
+                        try{
+                            //参数带有泛型的情况，这里我没处理，考虑的情况太多了qaq todo
+                            //泛型实际只在编译时起作用，是不是我也可以不去考虑了呢？
+                            Type[] actualTypeArguments = ((ParameterizedType)genericReturnType).getActualTypeArguments();
+                            for(Type actualTypeArgument: actualTypeArguments) {
+                                //System.err.println(actualTypeArgument);
+                            }
+                        }catch (Exception ex){
+                            //ex.printStackTrace();
+                        }
+
+                        serviceMethodApiBean.serviceMethodReturn=genericReturnType;
+                        try {
+                            //先只考虑void跟基本数据类型，实体类直接打印实体类名，先不去打印里面字段了
+                            if("void".equals(genericReturnType.getTypeName())){
+                                serviceMethodApiBean.serviceMethodReturnParams="void";
+                            }else{
+                                serviceMethodApiBean.serviceMethodReturnParams=getBeanFileds(Class.forName(genericReturnType.getTypeName()));
+                            }
+                        } catch (ClassNotFoundException ex) {
+                            serviceMethodApiBean.serviceMethodReturnParams=genericReturnType.getTypeName();
+                            //throw new RuntimeException("没有找到类："+genericReturnType.getTypeName());
+                        }
+                        methodList.add(serviceMethodApiBean);
+                        addApiItem(apiMapping, name, m,serviceMethodApiBean);
                     }
-                    outApiMap.put("apiServiceTitle", apiServiceTitle);
-                    outApiMap.put("apiServicDescription", apiServicDescription);
-                    HashMap methodMap = new HashMap();
-                    methodMap.put("methodTitle", apiMapping.title());
-                    methodMap.put("methodDescription", apiMapping.description());
-                    methodMap.put("serviceMethod", apiMapping.value());
-                    LocalVariableTableParameterNameDiscoverer u =
-                            new LocalVariableTableParameterNameDiscoverer();
-                    String[] params = u.getParameterNames(m);
-                    List array = new ArrayList();
-                    for (int i = 0; i < params.length; i++) {
-                        Map object = new HashMap();
-                        object.put("serviceMethodParamType", m.getParameterTypes()[i].getCanonicalName());
-                        object.put("serviceMethodParamTypeParams", getBeanFileds(m.getParameterTypes()[i]));
-                        object.put("serviceMethodParamName", params[i]);
-                        array.add(object);
-                    }
-                    methodMap.put("serviceMethodParams", array);
-                    Type genericReturnType = m.getGenericReturnType();
-                    methodMap.put("serviceMethodReturn", genericReturnType);
-                    try {
-                        methodMap.put("serviceMethodReturnParams", getBeanFileds(Class.forName(genericReturnType.getTypeName())));
-                    } catch (ClassNotFoundException ex) {
-                        //methodMap.put("serviceMetohodReturnParams", getBeanFileds(Class.forName(genericReturnType.getTypeName())));
-                    }
-                    methodList.add(methodMap);
-                    addApiItem(apiMapping, name, m);
+                }
+                if (isAnnotation) {
+                    serviceApiBean.serviceMethods=methodList;
+                    outApiList.add(serviceApiBean);
                 }
             }
-            if (isAnnotation) {
-                outApiMap.put("serviceMethods", methodList);
-                outApiList.add(outApiMap);
+        }
+    }
+
+    /**
+     * 检查要注册的接口服务是否已存在
+     * @param method
+     * @param methodList
+     * @return
+     */
+    private Boolean checkServiceIsE(String method,List<ServiceMethodApiBean> methodList,Class type){
+        if(!StringUtil.isNotEmpty(method)){
+            logger.error("启动失败！原因是:在类"+type.getName()+"里发现有接口服务注册的服务名不存在");
+            return false;
+        }
+        for(ServiceMethodApiBean serviceMethodApiBean:methodList){
+            if(method.equals(serviceMethodApiBean.getServiceMethod())){
+                logger.error("启动失败！原因是:在类"+type.getName()+"里发现重复的接口服务注册，服务名是:"+method);
+                return false;
             }
         }
+        return true;
     }
 
     /**
@@ -169,7 +272,6 @@ public class ApiStore {
 
     /**
      * 查找api
-     *
      * @param apiName
      * @return
      */
@@ -179,16 +281,16 @@ public class ApiStore {
 
     /**
      * 添加api
-     *
      * @param apiMapping api配置
      * @param beanName   beanq在spring context中的名称
      * @param method
      */
-    private void addApiItem(ApiMapping apiMapping, String beanName, Method method) {
+    private void addApiItem(ApiMapping apiMapping, String beanName, Method method,ServiceMethodApiBean serviceMethodApiBean) {
         ApiRunnable apiRun = new ApiRunnable();
         apiRun.apiName = apiMapping.value();
         apiRun.targetMethod = method;
         apiRun.targetName = beanName;
+        apiRun.serviceMethodApiBean=serviceMethodApiBean;
         apiMap.put(apiMapping.value(), apiRun);
     }
 
@@ -198,7 +300,7 @@ public class ApiStore {
 
     public List<ApiRunnable> findApiRunnables(String apiName) {
         if (apiName == null) {
-            throw new IllegalArgumentException("api name must not null!");
+            throw new IllegalArgumentException("api name 不能为空!");
         }
         List<ApiRunnable> list = new ArrayList<ApiRunnable>(20);
         for (ApiRunnable api : apiMap.values()) {
@@ -220,13 +322,4 @@ public class ApiStore {
         });
         return list;
     }
-
-    public boolean containsApi(String apiName, String version) {
-        return apiMap.containsKey(apiName + "_" + version);
-    }
-
-    public static ApplicationContext getApplicationContext() {
-        return applicationContext;
-    }
-
 }
