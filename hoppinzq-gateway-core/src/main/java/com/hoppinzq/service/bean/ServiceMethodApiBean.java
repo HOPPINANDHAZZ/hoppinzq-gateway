@@ -31,6 +31,7 @@ public class ServiceMethodApiBean {
     public int limitNumber=0;//限流次数 次/1s
     public boolean isTimeout=false;
     public int timeout=0;
+    public boolean isLog=false;//日志
 
     public ApiMapping.Type getRequestType() {
         return requestType;
@@ -127,4 +128,6 @@ public class ServiceMethodApiBean {
     public void setServiceMethodReturnParams(Object serviceMethodReturnParams) {
         this.serviceMethodReturnParams = serviceMethodReturnParams;
     }
+
+
 }

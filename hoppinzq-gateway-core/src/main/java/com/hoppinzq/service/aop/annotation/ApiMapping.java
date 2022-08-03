@@ -33,4 +33,9 @@ public @interface ApiMapping {
      * 为false是由你去封装，直接返回方法return值。因为有一些前端组件已经定死了其解析规范，必须按照他的要求反参
      */
     boolean returnType() default true;
+
+    /**
+     * 是否加入接口日志
+     */
+    boolean log() default false;
 }

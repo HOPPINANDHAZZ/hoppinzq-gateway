@@ -127,11 +127,12 @@ public class RequestInfo implements Serializable {
                 '}';
     }
 
-    public RequestInfo(String ip, String url, String logLevel, String classMethod, Object requestParams, Object result, String createTime, Long timeCost,Object exception) {
+    public RequestInfo(String ip, String url, String logLevel, String httpMethod,String classMethod, Object requestParams, Object result, String createTime, Long timeCost,Object exception) {
         this.id= UUIDUtil.getUUID();
         this.ip = ip;
         this.url = url;
         this.logLevel = logLevel;
+        this.httpMethod = httpMethod;
         this.classMethod = classMethod;
         this.requestParams = (requestParams!=null&&requestParams.toString().length()>511)?"传参太长了,只截取了一部分:"+requestParams.toString().substring(0,500):requestParams;
         this.result = (result!=null&&result.toString().length()>511)?"返回值太长了,只截取了一部分:"+result.toString().substring(0,500):result;

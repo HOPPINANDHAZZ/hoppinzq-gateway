@@ -98,6 +98,7 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
         RequestInfo requestInfo=null;
         String ip= IPUtils.getIpAddress();
         String id= UUIDUtil.getUUID();
+        String httpMethod=request.getMethod();
         String url=request.getRequestURL().toString();
         requestParam.setUrl(url);
         Map<String,String> decodeResult=decodeParams(request,response);
@@ -174,7 +175,7 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
             long createTime = System.currentTimeMillis();
             logger.debug("接口:" + request.getRequestURL().toString() + " 请求时长:" + (createTime - start));
             requestInfo = new RequestInfo(ip, url,
-                    "INFO", method, params,
+                    "INFO",httpMethod, method, params,
                     result, DateFormatUtil.stampToDate(createTime), createTime - start
                     , null);
             requestParam.setRequestInfo(requestInfo);
@@ -182,7 +183,7 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
             logger.debug("请求信息:\n {}", requestInfo.toString());
         } catch (ResultReturnException e) {
             logger.error("调用接口={" + method + "}异常  参数=" + params + "", e);
-            requestInfo = new RequestInfo(ip, url, "ERROR",
+            requestInfo = new RequestInfo(ip, url, "ERROR",httpMethod,
                     method, params,  null,
                     DateFormatUtil.stampToDate(System.currentTimeMillis()), 0L, e);
             result = handleError(e,requestInfo);
@@ -191,7 +192,7 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
             logger.error("错误的请求:\n {}", requestInfo.toString());
         } catch (InvocationTargetException e) {
             logger.error("调用接口={" + method + "}异常  参数=" + params + "", e.getTargetException());
-            requestInfo = new RequestInfo(ip, url, "ERROR",
+            requestInfo = new RequestInfo(ip, url, "ERROR",httpMethod,
                     method, params,  null,
                     DateFormatUtil.stampToDate(System.currentTimeMillis()), 0L, e.getTargetException());
             result = handleError(e.getTargetException(),requestInfo);
@@ -200,7 +201,7 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
             logger.error("错误的请求:\n {}", requestInfo.toString());
         } catch (Exception e) {
             logger.error("其他异常", e);
-            requestInfo = new RequestInfo(ip, url, "ERROR",
+            requestInfo = new RequestInfo(ip, url, "ERROR",httpMethod,
                     method, params,  null,
                     DateFormatUtil.stampToDate(System.currentTimeMillis()), 0L, e);
             result = handleError(e,requestInfo);
@@ -227,13 +228,16 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
             out.println(result.toString());
         }else{
             ServiceMethodApiBean serviceMethodApiBean=requestParam.getApiRunnable().getServiceMethodApiBean();
+            JSONObject resultJson=JSONObject.parseObject(result.toString());
             if(serviceMethodApiBean.methodReturn){
-                out.println(result.toString());
+                if(serviceMethodApiBean.isLog){
+                    resultJson.put("log",requestParam.getRequestInfo());
+                }
+                out.println(resultJson.toString());
             }else{
-                JSONObject resultJson=JSONObject.parseObject(result.toString());
                 //配置不封装返回值的情况：若报错，依然使用封装的返回值
                 if(resultJson.get("data")==null){
-                    out.println(resultJson);
+                    out.println(resultJson.toString());
                 }
                 out.println(resultJson.get("data").toString());
             }
@@ -385,7 +389,19 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
      * @throws ResultReturnException
      */
     public void token(HttpServletRequest request,HttpServletResponse response) throws ResultReturnException,IOException{
-
+//        String token = request.getParameter(ApiCommConstant.TOKEN);
+//        requestParam.setToken(token);
+//        ServiceMethodApiBean serviceMethodApiBean=requestParam.getApiRunnable().getServiceMethodApiBean();
+//        if(serviceMethodApiBean.tokenCheck){
+//            if(token==null){
+//                //抛出没有token的异常
+//                throw new ResultReturnException(ErrorEnum.ZQ_GATEWAY_TOKEN_NOT_FOUND);
+//            }
+//            if(!redisUtils.hasKey(token)){
+//                //token已过期,即重复的请求
+//                throw new ResultReturnException(ErrorEnum.ZQ_GATEWAY_REQUEST_REPEAT);
+//            }
+//        }
     }
 
     /**

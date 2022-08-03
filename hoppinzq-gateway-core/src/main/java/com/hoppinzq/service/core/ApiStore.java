@@ -132,6 +132,9 @@ public class ApiStore {
                             rightType=ApiMapping.RoleType.ADMIN;
                         }
 
+                        //日志注解，是否返回日志
+                        serviceMethodApiBean.isLog=apiMapping.log();
+
                         serviceMethodApiBean.methodRight=rightType;
                         serviceMethodApiBean.methodTitle=apiMapping.title();
                         serviceMethodApiBean.methodDescription=apiMapping.description();
