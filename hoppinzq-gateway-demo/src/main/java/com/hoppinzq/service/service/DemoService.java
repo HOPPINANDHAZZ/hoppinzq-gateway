@@ -20,12 +20,12 @@ public class DemoService {
     static int threadNum2 = 0;
 
     /**
-     * 权限配置
+     * 测试接口
      * @return
      */
     @ApiMapping(value = "test", title = "测试接口", description = "测试接口")
     public String test(){
-        //注册的接口列表
+        //注册的接口列表，通过动态改变该列表的参数，实现对接口的定制和修改
         List<ServiceApiBean> serviceApiBeans= apiCache.outApiList;
         //本次请求的所有数据
         RequestParam requestParam=(RequestParam)RequestContext.getPrincipal();
