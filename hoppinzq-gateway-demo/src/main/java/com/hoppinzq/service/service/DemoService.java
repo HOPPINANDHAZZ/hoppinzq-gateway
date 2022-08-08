@@ -4,6 +4,7 @@ import com.hoppinzq.service.aop.annotation.*;
 import com.hoppinzq.service.bean.RequestContext;
 import com.hoppinzq.service.bean.RequestParam;
 import com.hoppinzq.service.bean.ServiceApiBean;
+import com.hoppinzq.service.bean.ServiceMethodApiBean;
 import com.hoppinzq.service.cache.apiCache;
 
 import java.util.List;
@@ -24,19 +25,19 @@ public class DemoService {
      * @return
      */
     @ApiMapping(value = "test", title = "测试接口", description = "测试接口")
-    public String test(){
+    public String test(String str){
         //注册的接口列表，通过动态改变该列表的参数，实现对接口的定制和修改
         List<ServiceApiBean> serviceApiBeans= apiCache.outApiList;
         //本次请求的所有数据
         RequestParam requestParam=(RequestParam)RequestContext.getPrincipal();
-        return "测试接口";
+        return "测试接口:"+str;
     }
 
     /**
      * 权限配置
      * @return
      */
-    @ApiMapping(value = "testLogin", title = "测试接口-权限", description = "必须登录用户可调用",roleType = ApiMapping.RoleType.LOGIN)
+    @ApiMapping(value = "testLogin", title = "测试接口-权限", description = "必须登录用户可调用",log=true,roleType = ApiMapping.RoleType.LOGIN)
     public String testLogin(){
         return "该接口需要登录用户可调用";
     }
@@ -46,7 +47,7 @@ public class DemoService {
      * @return
      */
     @Timeout(timeout = 3000)
-    @ApiMapping(value = "testTimeout", title = "测试接口-超时机制", description = "接口响应时间超过3秒报错测试")
+    @ApiMapping(value = "testTimeout", title = "测试接口-超时机制", description = "接口响应时间超过3秒报错测试",log=true)
     public String testTimeout(){
         try{
             Thread.sleep(4000);
@@ -60,7 +61,7 @@ public class DemoService {
      * 请求类型
      * @return
      */
-    @ApiMapping(value = "testPost", title = "测试接口-类型", description = "该接口只允许post请求",type=ApiMapping.Type.POST)
+    @ApiMapping(value = "testPost", title = "测试接口-类型", description = "该接口只允许post请求",type=ApiMapping.Type.POST,log = true)
     public String testPost(){
         return "只允许post请求";
     }
@@ -111,7 +112,7 @@ public class DemoService {
      * @return
      */
     @ServiceLimit(number = 1)
-    @ApiMapping(value = "testLimit", title = "测试接口-限流", description = "该接口（同一ip）一秒只允许调用一次")
+    @ApiMapping(value = "testLimit", title = "测试接口-限流", description = "该接口（同一ip）一秒只允许调用一次",log = true)
     public String testLimit(){
         return "该接口（同一ip）一秒只允许调用一次";
     }
@@ -163,4 +164,15 @@ public class DemoService {
         return "该接口是报错的，会连日志一起返回";
     }
 
+    @ApiMapping(value = "change", title = "测试接口-改变方法testReturn，使其封装返回值，并返回日志")
+    public void change(){
+        List<ServiceApiBean> serviceApiBeans= apiCache.outApiList;
+        List<ServiceMethodApiBean> serviceMethods=serviceApiBeans.get(0).getServiceMethods();
+        for(ServiceMethodApiBean serviceMethodApiBean:serviceMethods){
+            if("testReturn".equals(serviceMethodApiBean.getServiceMethod())){
+                serviceMethodApiBean.setMethodReturn(true);
+                serviceMethodApiBean.setLog(true);
+            }
+        }
+    }
 }
