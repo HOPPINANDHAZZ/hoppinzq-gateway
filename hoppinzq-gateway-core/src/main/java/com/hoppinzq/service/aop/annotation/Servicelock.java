@@ -10,9 +10,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface Servicelock {
 	 String description()  default "";
-	/**
-	 * 类型
-	 */
+	//类型
 	Servicelock.LockType lockType() default LockType.DEFAULT;
 
 	enum LockType {

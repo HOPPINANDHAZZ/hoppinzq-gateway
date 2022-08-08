@@ -2,9 +2,7 @@ package com.hoppinzq.service.core;
 
 import com.hoppinzq.service.bean.ServiceMethodApiBean;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Map;
 
 /**
  * 网关找到服务并执行之
@@ -12,17 +10,11 @@ import java.util.Map;
  **/
 public class ApiRunnable {
     String apiName;
-    /**
-     * ioc bean 名称
-     */
+    //bean 名称
     String targetName;
-    /**
-     * 实例
-     */
+    //实例
     Object target;
-    /**
-     * 目标方法
-     */
+    //目标方法
     Method targetMethod;
 
     ServiceMethodApiBean serviceMethodApiBean;
@@ -31,9 +23,6 @@ public class ApiRunnable {
      * 多线程安全问题
      * @param args
      * @return
-     * @throws IllegalAccessException
-     * @throws IllegalArgumentException
-     * @throws InvocationTargetException
      */
     public Object run(Object... args) throws Exception {
         if (target == null) {

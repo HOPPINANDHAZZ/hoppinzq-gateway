@@ -178,7 +178,7 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
                     "INFO",httpMethod, method, params,
                     result, DateFormatUtil.stampToDate(createTime), createTime - start
                     , null);
-            requestParam.setRequestInfo(requestInfo);
+            requestParam.setLog(requestInfo);
             afterSuccessRequest(request,response);
             logger.debug("请求信息:\n {}", requestInfo.toString());
         } catch (ResultReturnException e) {
@@ -187,7 +187,7 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
                     method, params,  null,
                     DateFormatUtil.stampToDate(System.currentTimeMillis()), 0L, e);
             result = handleError(e,requestInfo);
-            requestParam.setRequestInfo(requestInfo);
+            requestParam.setLog(requestInfo);
             afterErrorRequest(request,response);
             logger.error("错误的请求:\n {}", requestInfo.toString());
         } catch (InvocationTargetException e) {
@@ -196,7 +196,7 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
                     method, params,  null,
                     DateFormatUtil.stampToDate(System.currentTimeMillis()), 0L, e.getTargetException());
             result = handleError(e.getTargetException(),requestInfo);
-            requestParam.setRequestInfo(requestInfo);
+            requestParam.setLog(requestInfo);
             afterErrorRequest(request,response);
             logger.error("错误的请求:\n {}", requestInfo.toString());
         } catch (Exception e) {
@@ -205,7 +205,7 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
                     method, params,  null,
                     DateFormatUtil.stampToDate(System.currentTimeMillis()), 0L, e);
             result = handleError(e,requestInfo);
-            requestParam.setRequestInfo(requestInfo);
+            requestParam.setLog(requestInfo);
             afterErrorRequest(request,response);
             logger.error("错误的请求:\n {}", requestInfo.toString());
         } finally {
@@ -231,7 +231,7 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
             JSONObject resultJson=JSONObject.parseObject(result.toString());
             if(serviceMethodApiBean.methodReturn){
                 if(serviceMethodApiBean.isLog){
-                    resultJson.put("log",requestParam.getRequestInfo());
+                    resultJson.put("log",requestParam.getLog());
                 }
                 out.println(resultJson.toString());
             }else{
@@ -251,7 +251,7 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
      * @return
      * @throws ResultReturnException
      */
-    public Map<String,String> decodeParams(HttpServletRequest request,HttpServletResponse response) throws ResultReturnException,IOException{
+    public Map<String,String> decodeParams(HttpServletRequest request,HttpServletResponse response) throws ResultReturnException{
         String encode = request.getParameter(ApiCommConstant.ENCODE);
         requestParam.setEncode(encode);
         if(encode==null){
@@ -282,7 +282,6 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
 
     /**
      * 系统参数校验
-     * 重写该方法以实现自己的参数校验
      * 返回ApiRunnable对象
      * @param request
      * @return
@@ -314,7 +313,7 @@ public class ApiGatewayHand implements InitializingBean, ApplicationContextAware
      * @return
      * @throws IOException
      */
-    public Boolean rightCheck(HttpServletRequest request,HttpServletResponse response,RequestParam requestParam) throws IOException{
+    public Boolean rightCheck(HttpServletRequest request,HttpServletResponse response,RequestParam requestParam) throws ResultReturnException, IOException{
         if(apiPropertyBean.isAuth()){
             return true;
         }

@@ -12,35 +12,22 @@ import java.lang.annotation.*;
 @Documented
 @Order(2)
 public  @interface ServiceLimit {
-	/**
-	 * 描述
-	 */
+	//描述
 	String description()  default "";
 
-	/**
-	 * key
-	 */
+	//key
 	String key() default "";
 
-    /**
-     * 1s几次限制，小于等于0不会限制，最多每秒5次触发限制
-     * @return
-     */
+    //1s几次限制，小于等于0不会限制，最多每秒5次触发限制
     int number() default 5;
 
-	/**
-	 * 类型
-	 */
+	//类型
 	LimitType limitType() default LimitType.CUSTOMER;
 
 	enum LimitType {
-		/**
-		 * 自定义key
-		 */
+		//自定义key
 		CUSTOMER,
-		/**
-		 * 根据请求者IP限流
-		 */
+		//根据请求者IP限流
 		IP
 	}
 }

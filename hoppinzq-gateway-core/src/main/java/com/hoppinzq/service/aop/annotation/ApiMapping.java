@@ -17,7 +17,7 @@ public @interface ApiMapping {
     ApiMapping.Type type() default ApiMapping.Type.ALL;//请求类型
     enum Type {
         GET,//只允许GET请求
-        POST,//至允许POST请求
+        POST,//只允许POST请求
         ALL,//所有请求都可
     }
     ApiMapping.RoleType roleType() default ApiMapping.RoleType.NO_RIGHT;//权限类型

@@ -12,22 +12,22 @@ import java.util.List;
  */
 public class RequestParam implements Serializable{
     private static final long serialVersionUID = 1L;
-    private String url;
-    private String cacheKey;
-    private int cacheTime=0;
-    private String params;
-    private String method;
-    private String sign;
-    private String encode;
-    private String token;
-    private String timestamp;
-    private Object result;
-    private ApiRunnable apiRunnable;
-    private List<FormInfo> formInfoList;
+    private String url;//本次请求的url
+    private String cacheKey;//本次请求缓存的标志key
+    private int cacheTime=0;//缓存时间
+    private String params;//本次请求携带的参数列表
+    private String method;//本次请求的目标方法
+    private String sign;//本次请求携带的签名
+    private String encode;//本次请求携带的加密字符串，也就是参数列表
+    private String token;//本次请求携带的token
+    private String timestamp;//本次请求携带的时间戳
+    private Object result;//本次请求响应的数据
+    private ApiRunnable apiRunnable;//本次请求调用方法的反射对象（包括名称，方法，实例，以及最重要的方法bean的解析参数）
+    private List<FormInfo> formInfoList;//本次请求解析的表单数据（文件上传数据也在该参数内）
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private RequestInfo requestInfo;
-    private Object user;
+    private RequestInfo log;//本次请求的日志（包括传参，响应时间，异常等等）
+    private Object user;//本次请求的zauth认证的当前登录人（如果没有就是null）
 
     public Object getUser() {
         return user;
@@ -45,12 +45,12 @@ public class RequestParam implements Serializable{
         this.result = result;
     }
 
-    public RequestInfo getRequestInfo() {
-        return requestInfo;
+    public RequestInfo getLog() {
+        return log;
     }
 
-    public void setRequestInfo(RequestInfo requestInfo) {
-        this.requestInfo = requestInfo;
+    public void setLog(RequestInfo log) {
+        this.log = log;
     }
 
     public String getUrl() {

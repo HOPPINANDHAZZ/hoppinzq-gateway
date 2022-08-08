@@ -140,7 +140,7 @@ public class ApiStore {
                         serviceMethodApiBean.methodDescription=apiMapping.description();
                         serviceMethodApiBean.serviceMethod=apiMapping.value();
                         //判断服务接口的value是否重复，如果有重复的不让启动
-                        //使用断言暴力终止，你可以通过Spring自带的actuator去优雅的终止
+                        //使用断言暴力终止
                         //使用System.exit(n);会造成死锁
                         //这是因为我发现SpringApplicationShutdownHook处于BLOCKED状态，这个应该就是关闭Spring钩子函数被阻塞
                         //主线程自然处于WAITING状态，可能的原因是某个线程持有锁但是没释放，LOCK.lock();会一直等待获取锁，导致阻塞

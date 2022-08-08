@@ -129,5 +129,11 @@ public class ServiceMethodApiBean {
         this.serviceMethodReturnParams = serviceMethodReturnParams;
     }
 
+    public boolean isLog() {
+        return isLog;
+    }
 
+    public void setLog(boolean log) {
+        isLog = log;
+    }
 }
