@@ -600,7 +600,7 @@
                             <ol class="mb-30" style="list-style: auto; padding-left: 20px;">
                                 <li>
                                     <p class="mb-10">①、网关服务注解<mark>ApiServiceMapping</mark>
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button><code>/**
+                                    <pre data-simplebar="" class="code-box"><code>/**
  * 自定义注解：注册服务类到Spring容器和服务类自定义信息
  */
 @Target({ElementType.TYPE})
@@ -630,7 +630,7 @@ public @interface ApiServiceMapping {
 </pre>
                                     </p>
                                     <p class="mb-10">需要加在任意（逻辑层）类上，如：
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>@ApiServiceMapping(title = "服务标题", description = "服务描述",roleType = ApiServiceMapping.RoleType.RIGHT)
 public class DemoService {}</code>
 </pre>
@@ -639,7 +639,7 @@ public class DemoService {}</code>
                                 </li>
                                 <li>
                                     <p class="mb-10">①、网关方法注解<mark>ApiMapping </mark>，<span class="fw-bold">只会在注解<mark>ApiServiceMapping</mark>环绕的类内生效！</span>
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 自定义注解：要暴露的服务类方法
  * 只会在被ApiServiceMapping环绕的类中生效
@@ -681,7 +681,7 @@ public @interface ApiMapping {
                                 </li>
                                 <li>
                                     <p class="mb-10">需要加在任意方法(可以是私有的)上，如：
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>@ApiMapping(value = "test", title = "测试接口", description = "测试接口",roleType = ApiMapping.RoleType.LOGIN,returnType=false,type=ApiMapping.Type.POST,log = true)
 public String test(){
     //注册的接口列表，通过动态改变该列表的参数，实现对接口的定制和修改
@@ -717,7 +717,7 @@ public String test(){
                                 </li>
                                 <li>
                                     <p class="mb-10">③、日志机制<mark> @ApiMapping(value = "testLog", title = "测试接口-日志", description = "该接口会连日志一起返回",log = true)</mark>
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 请求类型
  * @return
@@ -736,7 +736,7 @@ public String testPost(){
                                 <li>
                                     <p class="mb-10">④、权限机制<mark>@ApiMapping(value = "testLogin",roleType = ApiMapping.RoleType.LOGIN) </mark>，<span class="fw-bold">在项目启动后可以动态修改</span>
                                     <p class="mb-10">权限包括四种：未登录权限；登录权限；会员权限（付费用户）；超级管理员权限。其中后两者默认有登录权限，没有权限的调用会抛出异常。该权限机制由你去实现，你可以参照博客项目的zauth鉴权
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 权限配置
  * @return
@@ -755,7 +755,7 @@ public String testLogin(){
                                 </li>
                                 <li>
                                     <p class="mb-10">⑤、超时注解<mark>Timeout </mark>，<span class="fw-bold">在项目启动后无法修改</span>
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 自定义超时机制
  */
@@ -770,7 +770,7 @@ public @interface Timeout {
                                 </li>
                                 <li>
                                     <p class="mb-10">需要加在任意方法(可以是私有的)上，如：
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 超时机制
  * @return
@@ -794,7 +794,7 @@ public String testTimeout(){
                                 </li>
                                 <li>
                                     <p class="mb-10">⑥、返回值封装注解<mark>ReturnTypeUseDefault </mark>，<span class="fw-bold">只会在注解<mark>ApiMapping</mark>环绕的方法上生效！在项目启动后可以动态修改</span>
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 自定义注解：不封装返回值
  * 只会在被ApiServiceMapping环绕的类和被ApiMapping环绕的方法上生效
@@ -810,7 +810,7 @@ public @interface ReturnTypeUseDefault {
                                 </li>
                                 <li>
                                     <p class="mb-10">需要加在任意方法(可以是私有的)上，如：
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 返回值封装2
  * @return
@@ -823,7 +823,7 @@ public String testReturn2(){
 </pre>
                                     </p>
                                     <p class="mb-10">你还可以使用returnType=false，如：
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 返回值封装
  * @return
@@ -841,7 +841,7 @@ public String testReturn(){
                                 </li>
                                 <li>
                                     <p class="mb-10">⑦、类型限定<mark> @ApiMapping(value = "testPost", title = "测试接口-类型", description = "该接口只允许post请求",type=ApiMapping.Type.POST,log = true)</mark>
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 请求类型
  * @return
@@ -859,7 +859,7 @@ public String testPost(){
                                 </li>
                                 <li>
                                     <p class="mb-10">⑧、缓存注解<mark>ApiCache </mark>，<span class="fw-bold">只会在注解<mark>ApiMapping</mark>环绕的方法上生效！在项目启动后可以动态修改</span>
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 自定义注解：缓存注解
  * 只会在被ApiServiceMapping环绕的类中和被ApiMapping环绕的方法上生效
@@ -875,7 +875,7 @@ public @interface ApiCache {
                                 </li>
                                 <li>
                                     <p class="mb-10">需要加在任意方法(可以是私有的)上，如：
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 缓存机制
  * @return
@@ -891,7 +891,7 @@ public String testCache(){
                                 </li>
                                 <li>
                                     <p class="mb-10">⑨、幂等注解<mark>AutoIdempotent </mark>，<span class="fw-bold">只会在注解<mark>ApiMapping</mark>环绕的方法上生效！在项目启动后可以动态修改</span>
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 自定义注解：幂等注解，校验参数里的token
  * 只会在被ApiServiceMapping环绕的类中和被ApiMapping环绕的方法上生效
@@ -906,7 +906,7 @@ public @interface AutoIdempotent {
                                 </li>
                                 <li>
                                     <p class="mb-10">需要加在任意方法(可以是私有的)上，如：
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 幂等机制
  * @return
@@ -921,7 +921,7 @@ public String testAutoIdempotent(){
                                 </li>
                                 <li>
                                     <p class="mb-10">⑩、限流注解<mark>ServiceLimit </mark>，<span class="fw-bold">优先级2，在项目启动后不能修改</span>
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 自定义注解限流
  */
@@ -950,7 +950,7 @@ public  @interface ServiceLimit {
                                 </li>
                                 <li>
                                     <p class="mb-10">需要加在任意方法(可以是私有的)上，如：
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 限流机制
  * @return
@@ -969,7 +969,7 @@ public String testLimit(){
                                 </li>
                                 <li>
                                     <p class="mb-10">⑩、同步锁注解<mark>Servicelock </mark>，<span class="fw-bold">优先级1，在项目启动后不能修改</span>
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code>/**
  * 自定义注解同步锁
  */
@@ -990,7 +990,7 @@ public @interface Servicelock {
                                 </li>
                                 <li>
                                     <p class="mb-10">需要加在任意方法(可以是私有的)上，如：
-                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                    <pre data-simplebar="" class="code-box">
 <code> /**
  * 同步锁机制
  * @return
@@ -1041,7 +1041,7 @@ public String testLock2() throws Exception{
                                    rel="lightbox"><img
                                         src="http://hoppinzq.com/user/zhangqi3qw/fhzbz.png" alt=""/></a>
                                 <p class="mb-10">先写一个接口，动态改变方法testReturn的内容：</p>
-                                <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+                                <pre data-simplebar="" class="code-box">
 <code>@ApiMapping(value = "change", title = "测试接口-改变方法testReturn，使其封装返回值，并返回日志")
 public void change(){
     List&lt;ServiceApiBean&gt; serviceApiBeans= apiCache.outApiList;
@@ -1100,10 +1100,10 @@ public void change(){
                             <img src="http://hoppinzq.com/static/images/logo/1640338711_113639.png" alt="logo">
                         </a>
                     </div>
-                    <p>如果觉得该文档很有帮助，可通过一下方式联系我！Enjor coding！</p>
+                    <p>如果觉得该文档很有帮助，可通过以下方式联系我！Enjoy coding！</p>
                     <ul class="social">
                         <li><a href="https://gitee.com/hoppin"><i class="lni lni-github-original"></i></i></a></li>
-                        <li><a href="javascript:void(0)" title="HOPPIN_HAZZ"><i class="lni lni-wechat"></i></a></li>
+                        <li><a href="javascript:void(0)" onclick="alert('微信号：HOPPIN_HAZZ')" title="HOPPIN_HAZZ"><i class="lni lni-wechat"></i></a></li>
                         <li><a href="tel:15028582175"><i class="lni lni-phone"></i></a></li>
                         <li><a href="mailto:anmiezata@163.com"><i class="lni lni-envelope"></i></a></li>
                     </ul>
