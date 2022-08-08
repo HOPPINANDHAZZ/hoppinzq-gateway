@@ -18,9 +18,7 @@
 [剑来框架](https://gitee.com/hoppin/hoppinzq)
 的网关解耦并剥离出来形成的一个独立项目，可扩展性高。由于我的剑来框架的独特性（没有Controller层），所以不支持
 swagger注解，就手写了一个类似swagger的接口文档的功能并自定义了许多注解。
-> 👉 [演示网站点我](http://150.158.28.40:8806/index.html)
-> <br> 待补充 <br>
-> 👉 [文档点我](http://150.158.28.40:8806/documentation.html)
+> 👉 [文档点我](http://hoppin.cn/web/gateway/index.html)
 ## 💡起源
 在逛开源社区的时候看到一篇[博客](https://my.oschina.net/muyuxi/blog/1609477) (现在已经没了)，
 内容是关于api中间件的架构思想。当时我觉得这个思想很独特，刚好作者留下了一个[开源地址](https://gitee.com/hoppin/apitest)
