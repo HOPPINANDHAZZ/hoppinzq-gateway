@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文档</title>
+    <link rel="shortcut icon" type="image/x-icon" href="http://hoppinzq.com/static/images/favicon.ico">
+    <link rel="stylesheet" href="http://hoppinzq.com/spider/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://hoppinzq.com/static/css/plugins/lightbox.css">
+    <link rel="stylesheet" href="http://hoppinzq.com/spider/css/LineIcons.3.0.css">
+    <link rel="stylesheet" href="http://hoppinzq.com/spider/css/simple-bar.css">
+    <link rel="stylesheet" href="http://hoppinzq.com/spider/css/footer.css">
+    <link rel="stylesheet" href="http://hoppinzq.com/spider/css/main.css">
+    <link rel="stylesheet" href="http://hoppinzq.com/user/zhangqi3qw/zTree/zTreeStyle/zTreeStyle.css" type="text/css">
+    <link rel="stylesheet" href="http://hoppinzq.com/user/zhangqi3qw/zTree/zTreeStyle/animate.css" type="text/css">
+
+</head>
+<style>
+    div:focus, div:active, button:focus, button:active, a:focus, a:active {
+        outline: none;
+    }
+    body, div {
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+    section, .doc-main-wrapper {
+        outline: 1px solid transparent;
+    }
+    .footer-menu-items {
+        margin: 2px 0px;
+    }
+    .ztree ul li:before {
+        left: -173px;
+    }
+
+    .ztree>li>p~ul>li>p~ul>li>p~ul>li>p~ul>li>p {
+        background: #378639;
+    }
+
+    .explanations .single-explanation h4 {
+        word-break: break-all;
+    }
+    .type-btn{
+        color: #fff;
+        position: absolute;
+        top: 22px;
+        right: 12px;
+        border: 1px solid #eee;
+        background: #61b864;
+        border-radius: 5px;
+        font-size: 12px;
+        padding: 7px 16px;
+        -webkit-transition: all 0.4s ease;
+        transition: all 0.4s ease;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .zwagger {
+        padding: 2em 0;
+        background: #fff;
+    }
+
+    .zwagger-service .zwagger-method {
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        margin: 0 0 15px 10px;
+    }
+
+    .zwagger-service .zwagger-method-header {
+        padding: 0;
+        border-radius: 30px;
+    }
+
+    .zwagger-service .panel-title a {
+        display: block;
+        padding: 12px 20px 12px 50px;
+        background: #4fab45;
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+        border: 1px solid transparent;
+        border-radius: 30px;
+        position: relative;
+        transition: all 0.3s ease 0s;
+    }
+
+    .zwagger-service .panel-title a.collapsed {
+        background: #fff;
+        color: #0d345d;
+        border: 1px solid #ddd;
+    }
+
+    .zwagger-service .panel-title a:after,
+    .zwagger-service .panel-title a.collapsed:after {
+        content: "\f107";
+        font-family: fontawesome;
+        width: 55px;
+        height: 55px;
+        line-height: 55px;
+        border-radius: 50%;
+        background: #4cc251;
+        font-size: 25px;
+        color: #fff;
+        text-align: center;
+        border: 1px solid transparent;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.58);
+        position: absolute;
+        top: -5px;
+        left: -20px;
+        transition: all 0.3s ease 0s;
+    }
+
+    .zwagger-service .panel-title a.collapsed:after {
+        content: "\f105";
+        background: #fff;
+        color: #0d345d;
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+
+    .zwagger-service .panel-body {
+        padding: 20px 25px 10px 9px;
+        background: transparent;
+        font-size: 14px;
+        color: #8c8c8c;
+        line-height: 25px;
+        border-top: none;
+        position: relative;
+    }
+
+    .zwagger-service .panel-body p {
+        padding-left: 25px;
+        border-left: 1px dashed #8c8c8c;
+    }
+
+    .zwagger-service .panel-title .method-title {
+        float: right;
+        margin-right: 5%;
+    }
+
+    .zwagger-service-hide {
+        float: right;
+        margin-right: 5%;
+        cursor: pointer;
+    }
+
+    .zwagger-param-hide {
+        float: right;
+        margin-right: 5%;
+        cursor: pointer;
+    }
+
+    .zwagger-extra-hide {
+        float: right;
+        margin-right: 5%;
+        cursor: pointer;
+    }
+
+    .zwagger-service .zwagger-form {
+        margin-top: 10px;
+    }
+
+    .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    input[type=checkbox] {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .table-params {
+        border-bottom: 1px solid #000;
+        margin-bottom: 5px;
+    }
+    .zwagger-api{
+        margin-left: 5%;
+    }
+</style>
+
+<body class="position-relative" data-bs-spy="scroll" data-bs-target="#navbar-example2" tabindex="0">
+
+<div class="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-icon">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="testModal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal_position">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">敬请期待</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <h6 style="margin: 5px 0;">何为HOPPIN的WEB托管网站？他能做什么？</h6>
+                    <p>借助于 http://hoppin.cn 和 https://hoppinzq.com 两个域名,你可以将自己的网页直接托管到我的这两个域名下；
+                        无须购买服务器、购买DNS解析和申请SSL证书；
+                        可以使用hoppinzq.com自带的CDN提高你的网页加载速度；
+                        可以使用我的网站的seo优化，将你的网页快速的被百度等搜索引擎收录；
+                    </p>
+                    <p>
+                        要做到上面几点，你需要将你的网页通过接口上传到我的服务器上，然后选择java或者node作为后台（关于为什么没有Nginx，我想有必要说明:因为我需要对你的网页进行有效的管控和统计，并收集必要的信息）。
+                        其他资源文件上传到我的cdn并通过接口更新目录和刷新内容。然后就可以通过
+                        接口返回的地址访问你的页面了。</p>
+                    <h6 style="margin: 5px 0;">现已支持unity托管！！！！</h6>
+                    <p>
+                        在线尝试我做的unity游戏demo，带宽有限，因此加载速度缓慢。但是缓存做的好，一次加载，终身受益！移动端就不要点了，因为unity的webGL不支持移动设备，这会造成微信的崩溃，但这并不是我的错。</p>
+                    <p><a class="ticket" target="_blank" href="http://hoppin.cn/web/unity/2dxiaohuli/index.html">2D小狐狸Demo</a>
+                    </p>
+                    <p><a class="ticket" target="_blank" href="http://hoppin.cn/web/unity/mimixingdong/index.html">秘密行动Demo</a>
+                    </p>
+                    <p><a class="ticket" target="_blank"
+                          href="http://hoppin.cn/web/unity/xibudemo/index.html">西部Demo</a></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="$('#testModal').modal('hide');"
+                        data-dismiss="modal">太棒了！我很期待！
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<header class="header navbar-area others-pages">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-12">
+                <div class="nav-inner">
+                    <nav class="navbar navbar-expand-lg">
+                        <a class="navbar-brand" href="">
+                            <img src="http://hoppinzq.com/static/images/logo/1640338711_113639.png" alt="Logo">
+                        </a>
+                        <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                            <ul id="nav" class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <a href="index.html" class="active" aria-label="Toggle navigation">文档</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="https://gitee.com/hoppin/hoppinzq-gateway"
+                                       aria-label="Toggle navigation">开源地址</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a onclick="$('#testModal').modal('show');"
+                                       aria-label="Toggle navigation" style="cursor: pointer">HOPPIN的WEB托管</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="button">
+                            <a data-toggle="modal" onclick="$('#testModal').modal('show');" data-target="#testModal"
+                               class="btn">加入HOPPIN的WEB托管 <i class="lni lni-circle-plus"></i></a>
+                        </div>
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <button class="menu-button menu-open">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="doc_overlay"></div>
+    <div class="container doc_container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-4 col-12">
+                <aside data-simplebar="" class="doc-sidebar">
+                    <button class="menu-button menu-close">
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <nav class="sidenav" id="navbar-example2">
+                        <ul class="nav flex-column">
+                            <li>
+                                <h6><i class="lni lni-list"></i> 写在前面 </h6>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#origin" class="nav-link active">起源</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#quick-start">简介</a>
+                            </li>
+                            <li>
+                                <h6><i class="lni lni-grid-alt"></i> 开始使用</h6>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#yinr">网关引入</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#startw">网关启动</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#demowg">demo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#dongtai">动态修改</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#zwagger_show">zwagger</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </aside>
+            </div>
+            <div class="col-xl-9 col-lg-9 col-12">
+                <section class="main-section" tabindex="0">
+                    <div class="doc-main-wrapper">
+                        <div class="welcome mb-10">
+                            <h1 class="mb-30">
+                                欢迎您使用 <span class="template-name">zq网关</span> ，下面是使用文档
+                            </h1>
+                            <div class="author-info">
+                                <img src="http://150.158.28.40:9000/e3f22651f73e46979d9461f38cb2ab0a.jpg" alt="#">
+                                <div>
+                                    <p class="name">zhangqi</p>
+                                    <span>2022/08/02</span>
+                                </div>
+                            </div>
+                            <p class="mb-10">
+                                该项目已被git托管，你可以直接<a href="https://gitee.com/hoppin/hoppinzq-gateway"
+                                                   class="ticket" target="_blank">在gitee上拉取该项目</a>。另外，该网页已被hoppin的网页
+                                托管服务所托管，具体信息<a class="ticket" style="cursor: pointer"
+                                               onclick="$('#testModal').modal('show');">点我</a>
+                            </p>
+                            <p class="mb-10">
+                                下面简单介绍一下该项目，具体内容和细节可以访问git里的<a class="ticket" target="_blank"
+                                                               href="https://gitee.com/hoppin/hoppinzq-gateway/blob/master/README.md">readme</a>
+                            </p>
+                            <div class="doc-title pt-30" id="origin">
+                                <h2>起源</h2>
+                            </div>
+                            <div class="box">
+                                <p class="mb-10">
+                                    在逛开源社区的时候看到一篇<a class="ticket" target="_blank"
+                                                    href="https://my.oschina.net/muyuxi/blog/1609477">博客</a> (现在已经没了)，
+                                    内容是关于api中间件的架构思想。当时我觉得这个思想很独特，刚好作者留下了一个<a class="ticket" target="_blank"
+                                                                              href="https://gitee.com/hoppin/apitest">开源地址</a>
+                                    ，
+                                    并实现了部分内容，之后的内容就由我来补充和拓展。由于之前写了一套rpc框架，
+                                    加上这套网关中间件，急需一个项目来检验其可行性和健壮性，
+                                    就写了一个<a class="ticket" target="_blank"
+                                            href="https://gitee.com/hoppin/hoppinzq">博客项目</a>
+                                    并在那个项目里继续完善和添加功能并修补bug，就都提交在博客项目里了。
+                                    今天就把部分功能剥离出来，作为一个新的开源项目。
+                                </p>
+                            </div>
+
+                        </div>
+                        <div id="quick-start" class="installing pt-30">
+                            <div class="doc-title">
+                                <h2>简介</h2>
+                            </div>
+                            <div class="box">
+                                <p class="mb-10">
+                                    本项目其实就是把我的<a class="ticket" target="_blank"
+                                                 href="https://gitee.com/hoppin/hoppinzq">剑来框架</a>的网关解耦并剥离出来形成的一个独立项目，
+                                    可扩展性极高。由于我的剑来框架架构的独特性（没有Controller层），所以不支持swagger注解，
+                                    就手写了一个类似swagger的接口文档的功能并自定义了许多注解。在此基础上，zq网关诞生了。
+                                </p>
+                                <p class="mb-10">以下是zq网关一个简单的流程图以及与普通请求流程的对比:</p>
+                                <a href="http://hoppinzq.com/user/zhangqi3qw/chrome_d72I3kOpCr.png"
+                                   class="img-light"
+                                   rel="lightbox"><img
+                                        src="http://hoppinzq.com/user/zhangqi3qw/chrome_d72I3kOpCr.png" alt=""/></a>
+                                <p class="mb-10">
+                                    相信你已经迫不及待看demo了，你会发现@Controller和@Service注解已经没有了，取而代之的是网关服务注解@ApiServiceMapping和剑来RPC注解@ServiceRegister。这两个其实就是@Service注解，下面我会详细介绍。</p>
+                            </div>
+                        </div>
+
+                        <div id="yinr" class="pt-30">
+                            <div class="doc-title">
+                                <h2>网关引入</h2>
+                            </div>
+                            <p class="mb-30">
+                                你有三种方式引入该网关
+                            </p>
+                            <ol class="mb-30" style="list-style: auto; padding-left: 20px;">
+                                <li>
+                                    <p class="mb-10">
+                                        方式1、通过我的<a href="http://1.15.232.156:8081/nexus/content/groups/public/"
+                                                   target="_blank" class="ticket">Maven私服Nexus引入</a></p>
+                                    <p class="mb-10">①、先引入仓库位置
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>&lt;repositories&gt;
+    &lt;repository&gt;
+        &lt;id&gt;zhangqi&lt;/id&gt;
+        &lt;name&gt;zhangqi&lt;/name&gt;
+        &lt;url&gt;http://1.15.232.156:8081/nexus/content/groups/public/&lt;/url&gt;
+    &lt;/repository&gt;
+&lt;/repositories&gt;</code>
+</pre>
+                                    </p>
+                                    <p class="mb-10">②、再引入依赖
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>&lt;dependency&gt;
+    &lt;groupId&gt;com.hoppinzq&lt;/groupId&gt;
+    &lt;artifactId&gt;hoppinzq-service-gateway&lt;/artifactId&gt;
+    &lt;version&gt;1.1&lt;/version&gt;
+&lt;/dependency&gt;</code>
+</pre>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="mb-10">方式2、直接引入jar包，点击下载<a class="ticket"
+                                                                         href="http://150.158.28.40:8090/baseFile/downloadFile/10d5f2689de74fbdb18eede29bad0314">hoppinzq-gateway-core-1.1.jar</a>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="mb-10">方式3、<span class="fw-bold">(推荐)</span>将其作为您项目的一个模块，这样你就可以定制你的网关并拓展。你只需要<a
+                                            href="https://gitee.com/hoppin/hoppinzq-gateway" class="ticket"
+                                            target="_blank">在gitee上拉取该项目</a>，我帮你集成好了。</p>
+                                </li>
+                            </ol>
+                        </div>
+
+
+                        <div id="startw" class="pt-30">
+                            <div class="doc-title">
+                                <h2>网关启动</h2>
+                            </div>
+                            <p class="mb-30">
+                                你有两种方式启动网关，在这里我建议测试学习的时候用第一种，实际使用的时候用第二种
+                            </p>
+                            <ol class="mb-30" style="list-style: auto; padding-left: 20px;">
+                                <li>
+                                    <p class="mb-10">方式1、在启动类前加上zq网关开关注解
+                                        <mark>@EnableGateway</mark>
+                                        ,这是最简单的方式。
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="mb-10">方式2、如果你阅读源码你会发现，通过方法1启动的网关默认url规则是以hoppinzq为
+                                        后缀的请求，而且它的ApiGatewayHand处理器阉割看很多，可能无法满足您的要求，而你无意修改源码。这时你就可以用这个方法了：
+                                        你需要自己写一个Servlet。幸运的是，你并非无demo可循，你可以参照<a
+                                                href="https://gitee.com/hoppin/hoppinzq/blob/master/hoppinzq-blog/src/main/java/com/hoppinzq/service/gateway/BlogGatewayServlet.java"
+                                                target="_blank" class="ticket">我的博客项目</a>
+                                        是如何定制网关Servlet的</p>
+                                    <a href="http://hoppinzq.com/user/zhangqi3qw/idea64_xTeDr7fkcS.png"
+                                       class="img-light"
+                                       rel="lightbox"><img
+                                            src="http://hoppinzq.com/user/zhangqi3qw/idea64_xTeDr7fkcS.png" alt=""/></a>
+                                    <p class="mb-10">新建一个类继承网关处理器ApiGatewayHand，然后在你的Servlet的init方法声明该处理器，
+                                        并重写doGet、doPost方法，然后指定url映射，最后将request,response使用你声明的处理器处理请求即可。</p>
+                                    <p class="mb-10">新建的类重写你想要重写的方法以适应您的需求</p>
+                                    <a href="http://hoppinzq.com/user/zhangqi3qw/idea64_z7wbO4VRLu.png"
+                                       class="img-light"
+                                       rel="lightbox"><img
+                                            src="http://hoppinzq.com/user/zhangqi3qw/idea64_z7wbO4VRLu.png" alt=""/></a>
+                                    <p class="mt-10 mb-10">其中，尽量不要去重写的方法如下（这是因为ApiGatewayHand实现了InitializingBean,
+                                        ApplicationContextAware两个接口）：</p>
+                                </li>
+
+                                <div class="box">
+                                    <div class="example-box">
+                                        <div class="explanations">
+                                            <div class="single-explanation red">
+                                                <div class="content">
+                                                    <h4>void setApplicationContext(ApplicationContext context);</h4>
+                                                    <p><span class="fw-bold">你不应该重写该方法！保持原处理器的该方法的完整！必须在该方法内将spring上下文ApplicationContext交给作为API注册中心的ApiStore</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="single-explanation red">
+                                                <div class="content">
+                                                    <h4>void afterPropertiesSet();</h4>
+                                                    <p><span class="fw-bold">你不应该重写该方法！保持原处理器的该方法的完整！该方法是在ApiGatewayHand处理器被Spring正确实例化的时候调用的方法，该方法内必须调用ApiStore的loadApiFromSpringBeans方法来扫描api网关注解并存储</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mt-10 mb-10">以上两个方法你可以补充代码，但是不能删除原有的代码逻辑。可选择重写的方法如下：</p>
+                                <div class="box">
+                                    <div class="example-box">
+                                        <div class="explanations">
+                                            <div class="single-explanation gray">
+                                                <div class="content">
+                                                    <h4>void handle(HttpServletRequest request, HttpServletResponse
+                                                        response)</h4>
+                                                    <p>处理请求的核心代码，最好不要动原来的代码逻辑。</p>
+                                                </div>
+                                            </div>
+                                            <div class="single-explanation gray">
+                                                <div class="content">
+                                                    <h4>void setOutParam(HttpServletRequest request,HttpServletResponse
+                                                        response,Object result)</h4>
+                                                    <p>该方法会在返回数据时调用，其中result为逻辑层返回值或者异常。可以在该方法内自定义封装统一返回值或处理日志。</p>
+                                                </div>
+                                            </div>
+                                            <div class="single-explanation gray">
+                                                <div class="content">
+                                                    <h4>Map&lt;String,String&gt; decodeParams(HttpServletRequest
+                                                        request,HttpServletResponse response) throws
+                                                        ResultReturnException</h4>
+                                                    <p>
+                                                        该方法会在处理参数时调用，若请求中携带了encode参数。此时将对参数解码，返回解码后的参数列表。重写该方法以自定义解码规则。</p>
+                                                </div>
+                                            </div>
+                                            <div class="single-explanation gray">
+                                                <div class="content">
+                                                    <h4>Boolean rightCheck(HttpServletRequest
+                                                        request,HttpServletResponse response,RequestParam requestParam)
+                                                        throws ResultReturnException</h4>
+                                                    <p>
+                                                        权限校验，将在调用方法前调用，这个需要你去重写，因为每个人的权限校验都不尽相同。但是如果你想通过本网关提供的注解的形式，可参照博客项目的该方法的编写。返回true表示校验通过</p>
+                                                </div>
+                                            </div>
+                                            <div class="single-explanation gray">
+                                                <div class="content">
+                                                    <h4>void type(HttpServletRequest request,HttpServletResponse
+                                                        response)</h4>
+                                                    <p>类型校验，如果你在方法上添加了类型注解（只允许get或者post），将在该方法内校验。</p>
+                                                </div>
+                                            </div>
+                                            <div class="single-explanation gray">
+                                                <div class="content">
+                                                    <h4>void sign(HttpServletRequest request,HttpServletResponse
+                                                        response)</h4>
+                                                    <p>签名校验，若请求中携带了sign参数。</p>
+                                                </div>
+                                            </div>
+                                            <div class="single-explanation gray">
+                                                <div class="content">
+                                                    <h4>void cache(HttpServletRequest request,HttpServletResponse
+                                                        response)</h4>
+                                                    <p>缓存，重写该方法以实现自己的缓存机制。因为要解耦，就把redis删了，你可以借助blog博客的缓存设计。</p>
+                                                </div>
+                                            </div>
+                                            <div class="single-explanation gray">
+                                                <div class="content">
+                                                    <h4>void token(HttpServletRequest request,HttpServletResponse
+                                                        response)</h4>
+                                                    <p>检验token，实现接口幂等。</p>
+                                                </div>
+                                            </div>
+                                            <div class="single-explanation gray">
+                                                <div class="content">
+                                                    <h4>void afterSuccessRequest(HttpServletRequest
+                                                        request,HttpServletResponse response)</h4>
+                                                    <p>请求成功执行的操作，重写该方法以自定义操作。</p>
+                                                </div>
+                                            </div>
+                                            <div class="single-explanation gray">
+                                                <div class="content">
+                                                    <h4>void afterErrorRequest(HttpServletRequest
+                                                        request,HttpServletResponse response)</h4>
+                                                    <p>请求失败执行的操作，重写该方法以自定义操作。</p>
+                                                </div>
+                                            </div>
+                                            <div class="single-explanation gray">
+                                                <div class="content">
+                                                    <h4>void afterRequest(HttpServletRequest request,HttpServletResponse
+                                                        response)</h4>
+                                                    <p>请求完成后执行操作（无论成功与否），重写该方法执行自定义操作。</p>
+                                                </div>
+                                            </div>
+                                            <div class="single-explanation gray" style="width: 100%;overflow-x: scroll;list-style-type: none;display: flex;">
+                                                <div class="content">
+                                                    <p>以上所有方法内部都可以通过
+                                                        <mark>(RequestParam)RequestContext.getPrincipal();
+                                                        </mark>
+                                                        获取本次请求的所有信息
+                                                    </p>
+                                                    <div id="params_tree" style="cursor: move">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p id="sqzh" style="cursor: pointer">[收起/展开]</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ol>
+                        </div>
+
+                        <div id="demowg" class="pt-30">
+                            <div class="doc-title">
+                                <h2>demo</h2>
+                            </div>
+                            <p class="mb-30">
+                                引入网关后，就可以使用网关的注解了，这里介绍8个注解，其中<mark>ApiServiceMapping</mark>注解和<mark>ApiMapping</mark>注解是必须的
+                            </p>
+                            <ol class="mb-30" style="list-style: auto; padding-left: 20px;">
+                                <li>
+                                    <p class="mb-10">①、网关服务注解<mark>ApiServiceMapping</mark>
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button><code>/**
+ * 自定义注解：注册服务类到Spring容器和服务类自定义信息
+ */
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Service
+public @interface ApiServiceMapping {
+    @AliasFor(
+            annotation = Service.class
+    )
+    String value() default "";
+    String title() default "";
+    String description() default "";
+
+    /**
+     * 权限类型
+     */
+    ApiServiceMapping.RoleType roleType() default ApiServiceMapping.RoleType.NO_RIGHT;
+
+    enum RoleType {
+        NO_RIGHT,//服务类下的全部方法都不校验权限（此时通过为ApiMapping注解设置的权限会全部失效）
+        RIGHT,//服务类下的全部方法都由方法自己决定是否校验权限（通过为ApiMapping注解设置RoleType的枚举值，方法自己默认不校验权限）
+        ALL_RIGHT,//服务类下的全部方法都校验登录权限（此时通过为ApiMapping注解设置的权限会全部失效）
+        ALL_ADMIN_RIGHT//服务类下的全部方法都校验管理员权限（此时通过为ApiMapping注解设置的权限会全部失效）
+    }
+}</code>
+</pre>
+                                    </p>
+                                    <p class="mb-10">需要加在任意（逻辑层）类上，如：
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>@ApiServiceMapping(title = "服务标题", description = "服务描述",roleType = ApiServiceMapping.RoleType.RIGHT)
+public class DemoService {}</code>
+</pre>
+                                    <p class="mb-10">其中title是服务标题，description是服务描述，roleType是权限枚举
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="mb-10">①、网关方法注解<mark>ApiMapping </mark>，<span class="fw-bold">只会在注解<mark>ApiServiceMapping</mark>环绕的类内生效！</span>
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 自定义注解：要暴露的服务类方法
+ * 只会在被ApiServiceMapping环绕的类中生效
+ */
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface ApiMapping {
+    String value();
+    String title() default "";
+    String description() default "";
+    ApiMapping.Type type() default ApiMapping.Type.ALL;//请求类型
+    enum Type {
+        GET,//只允许GET请求
+        POST,//只允许POST请求
+        ALL,//所有请求都可
+    }
+    ApiMapping.RoleType roleType() default ApiMapping.RoleType.NO_RIGHT;//权限类型
+    enum RoleType {
+        NO_RIGHT,//不校验权限
+        LOGIN,//校验登录权限
+        MEMBER,//校验登录权限及会员权限，付费用户
+        ADMIN,//超级管理员
+    }
+    /**
+     * 声明返回值是否需要网关统一封装，封装规则需要配置，或者什么都不干用网关默认的{"code":xxx,"data":"xxx"}
+     * 为true表示需要统一封装，这样前端就可以统一对this.response进行处理
+     * 为false是由你去封装，直接返回方法return值。因为有一些前端组件已经定死了其解析规范，必须按照他的要求反参
+     */
+    boolean returnType() default true;
+
+    /**
+     * 是否加入接口日志
+     */
+    boolean log() default false;
+}</code>
+</pre>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="mb-10">需要加在任意方法(可以是私有的)上，如：
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>@ApiMapping(value = "test", title = "测试接口", description = "测试接口",roleType = ApiMapping.RoleType.LOGIN,returnType=false,type=ApiMapping.Type.POST,log = true)
+public String test(){
+    //注册的接口列表，通过动态改变该列表的参数，实现对接口的定制和修改
+    List&lt;ServiceApiBean&gt; serviceApiBeans= apiCache.outApiList;
+    //本次请求的所有数据
+    RequestParam requestParam=(RequestParam)RequestContext.getPrincipal();
+    return "测试接口";
+}</code>
+</pre>
+                                    <p class="mb-10">其中value是定义的请求映射名，为必填，在项目启动时，若发现有未赋值的value或重复的value就会不让启动。
+                                        title是方法标题，description是方法描述，roleType是权限枚举，上面那个表示只允许登录用户调用，未登录用户调用会抛出异常。returnType是是否封装返回值
+                                        为false表示不封装返回值。type是请求类型枚举，上面那个表示只允许POST请求调用。log是日志，为true表示（在返回值内）返回日志。
+                                    </p>
+                                    <p class="mb-30"><p><span class="fw-bold">进入网关的请求风格如下：</span></p>
+                                    <pre data-simplebar="" class="code-box"><button class="type-btn">GET请求</button>
+<code>http://127.0.0.1:端口号/网关后缀?method=方法名必须写&amp;params={"参数名":"值"}&amp;sign=签名可不写&amp;token=可不写&amp;encode=加密参数可不写&amp;isEncodeReturn=可不写&amp;timestamp=强制刷新可不写
+                                    </code>
+</pre>
+                                    <pre data-simplebar="" class="code-box"><button class="type-btn">POST请求</button>
+<code>$.ajax({
+    url:"http://127.0.0.1:端口号/网关后缀?method=方法名必须写",
+    type:"post",
+    data:JSON.stringify({
+        "参数名":值
+    }),
+    dataType:"json"
+})
+                                    </code>
+</pre>
+
+
+
+                                </li>
+                                <li>
+                                    <p class="mb-10">③、日志机制<mark> @ApiMapping(value = "testLog", title = "测试接口-日志", description = "该接口会连日志一起返回",log = true)</mark>
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 请求类型
+ * @return
+ */
+@ApiMapping(value = "testPost", title = "测试接口-类型", description = "该接口只允许post请求",type=ApiMapping.Type.POST,log = true)
+public String testPost(){
+    return "只允许post请求";
+}</code>
+</pre>
+                                    </p>
+                                    <a href="http://hoppinzq.com/user/zhangqi3qw/rizhi.png"
+                                       class="img-light"
+                                       rel="lightbox"><img
+                                            src="http://hoppinzq.com/user/zhangqi3qw/rizhi.png" alt=""/></a>
+                                </li>
+                                <li>
+                                    <p class="mb-10">④、权限机制<mark>@ApiMapping(value = "testLogin",roleType = ApiMapping.RoleType.LOGIN) </mark>，<span class="fw-bold">在项目启动后可以动态修改</span>
+                                    <p class="mb-10">权限包括四种：未登录权限；登录权限；会员权限（付费用户）；超级管理员权限。其中后两者默认有登录权限，没有权限的调用会抛出异常。该权限机制由你去实现，你可以参照博客项目的zauth鉴权
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 权限配置
+ * @return
+ */
+@ApiMapping(value = "testLogin", title = "测试接口-权限", description = "必须登录用户可调用",roleType = ApiMapping.RoleType.LOGIN, log = true)
+public String testLogin(){
+    return "该接口需要登录用户可调用";
+}</code>
+</pre>
+                                    </p>
+                                    </p>
+                                    <a href="http://hoppinzq.com/user/zhangqi3qw/quanxian.png"
+                                       class="img-light"
+                                       rel="lightbox"><img
+                                            src="http://hoppinzq.com/user/zhangqi3qw/quanxian.png" alt=""/></a>
+                                </li>
+                                <li>
+                                    <p class="mb-10">⑤、超时注解<mark>Timeout </mark>，<span class="fw-bold">在项目启动后无法修改</span>
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 自定义超时机制
+ */
+@Target({ElementType.PARAMETER, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Timeout {
+    int timeout() default 20000;
+}</code>
+</pre>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="mb-10">需要加在任意方法(可以是私有的)上，如：
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 超时机制
+ * @return
+ */
+@Timeout(timeout = 3000)
+@ApiMapping(value = "testTimeout", title = "测试接口-超时机制", description = "接口响应时间超过3秒报错测试", log = true)
+public String testTimeout(){
+    try{
+        Thread.sleep(4000);
+    }catch(Exception exception){
+
+    }
+    return "接口响应时间超过3秒报错测试";
+}</code>
+</pre>
+                                    </p>
+                                    <a href="http://hoppinzq.com/user/zhangqi3qw/chaoshi.png"
+                                       class="img-light"
+                                       rel="lightbox"><img
+                                            src="http://hoppinzq.com/user/zhangqi3qw/chaoshi.png" alt=""/></a>
+                                </li>
+                                <li>
+                                    <p class="mb-10">⑥、返回值封装注解<mark>ReturnTypeUseDefault </mark>，<span class="fw-bold">只会在注解<mark>ApiMapping</mark>环绕的方法上生效！在项目启动后可以动态修改</span>
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 自定义注解：不封装返回值
+ * 只会在被ApiServiceMapping环绕的类和被ApiMapping环绕的方法上生效
+ * 优先级优于ApiMapping注解的returnType，也就是说如果方法有该注解，强行以该注解为主
+ */
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface ReturnTypeUseDefault {
+}</code>
+</pre>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="mb-10">需要加在任意方法(可以是私有的)上，如：
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 返回值封装2
+ * @return
+ */
+@ReturnTypeUseDefault
+@ApiMapping(value = "testReturn2", title = "测试接口-返回值封装2", description = "该接口返回值不会被包装2")
+public String testReturn2(){
+    return "该接口返回值不会被包装";
+}</code>
+</pre>
+                                    </p>
+                                    <p class="mb-10">你还可以使用returnType=false，如：
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 返回值封装
+ * @return
+ */
+@ApiMapping(value = "testReturn", title = "测试接口-返回值封装", description = "该接口返回值不会被包装",returnType=false)
+public String testReturn(){
+    return "该接口返回值不会被包装";
+}</code>
+</pre>
+                                    </p>
+                                    <a href=http://hoppinzq.com/user/zhangqi3qw/fanhuizhi.png"
+                                       class="img-light"
+                                       rel="lightbox"><img
+                                            src="http://hoppinzq.com/user/zhangqi3qw/fanhuizhi.png" alt=""/></a>
+                                </li>
+                                <li>
+                                    <p class="mb-10">⑦、类型限定<mark> @ApiMapping(value = "testPost", title = "测试接口-类型", description = "该接口只允许post请求",type=ApiMapping.Type.POST,log = true)</mark>
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 请求类型
+ * @return
+ */
+@ApiMapping(value = "testPost", title = "测试接口-类型", description = "该接口只允许post请求",type=ApiMapping.Type.POST,log = true)
+public String testPost(){
+    return "只允许post请求";
+}</code>
+</pre>
+                                    </p>
+                                    <a href="http://hoppinzq.com/user/zhangqi3qw/lxxd.png"
+                                       class="img-light"
+                                       rel="lightbox"><img
+                                            src="http://hoppinzq.com/user/zhangqi3qw/lxxd.png" alt=""/></a>
+                                </li>
+                                <li>
+                                    <p class="mb-10">⑧、缓存注解<mark>ApiCache </mark>，<span class="fw-bold">只会在注解<mark>ApiMapping</mark>环绕的方法上生效！在项目启动后可以动态修改</span>
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 自定义注解：缓存注解
+ * 只会在被ApiServiceMapping环绕的类中和被ApiMapping环绕的方法上生效
+ */
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface ApiCache {
+    int time() default 60*5;//默认5分钟
+}</code>
+</pre>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="mb-10">需要加在任意方法(可以是私有的)上，如：
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 缓存机制
+ * @return
+ */
+@ApiCache
+@ApiMapping(value = "testCache", title = "测试接口-缓存", description = "该接口返回值会被缓存")
+public String testCache(){
+    //注意，需要打开注释
+    return "该接口返回值会被缓存，注意请打开ApiGatewayHand的注释，需要借助redis实现";
+}</code>
+</pre>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="mb-10">⑨、幂等注解<mark>AutoIdempotent </mark>，<span class="fw-bold">只会在注解<mark>ApiMapping</mark>环绕的方法上生效！在项目启动后可以动态修改</span>
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 自定义注解：幂等注解，校验参数里的token
+ * 只会在被ApiServiceMapping环绕的类中和被ApiMapping环绕的方法上生效
+ */
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface AutoIdempotent {
+}</code>
+</pre>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="mb-10">需要加在任意方法(可以是私有的)上，如：
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 幂等机制
+ * @return
+ */
+@AutoIdempotent
+@ApiMapping(value = "testAutoIdempotent", title = "测试接口-幂等", description = "该接口幂等")
+public String testAutoIdempotent(){
+    return "该接口幂等，注意请打开ApiGatewayHand类里的token方法的注释，需要借助redis实现";
+}</code>
+</pre>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="mb-10">⑩、限流注解<mark>ServiceLimit </mark>，<span class="fw-bold">优先级2，在项目启动后不能修改</span>
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 自定义注解限流
+ */
+@Target({ElementType.PARAMETER, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Order(2)
+public  @interface ServiceLimit {
+	//描述
+	String description()  default "";
+	//key
+	String key() default "";
+    //1s几次限制，小于等于0不会限制，最多每秒5次触发限制
+    int number() default 5;
+	//类型
+	LimitType limitType() default LimitType.CUSTOMER;
+	enum LimitType {
+		//自定义key
+		CUSTOMER,
+		//根据请求者IP限流
+		IP
+	}
+}</code>
+</pre>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="mb-10">需要加在任意方法(可以是私有的)上，如：
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 限流机制
+ * @return
+ */
+@ServiceLimit(number = 1)
+@ApiMapping(value = "testLimit", title = "测试接口-限流", description = "该接口（同一ip）一秒只允许调用一次",log = true)
+public String testLimit(){
+    return "该接口（同一ip）一秒只允许调用一次";
+}</code>
+</pre>
+                                    </p>
+                                    <a href="http://hoppinzq.com/user/zhangqi3qw/xianliu.png"
+                                       class="img-light"
+                                       rel="lightbox"><img
+                                            src="http://hoppinzq.com/user/zhangqi3qw/xianliu.png" alt=""/></a>
+                                </li>
+                                <li>
+                                    <p class="mb-10">⑩、同步锁注解<mark>Servicelock </mark>，<span class="fw-bold">优先级1，在项目启动后不能修改</span>
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>/**
+ * 自定义注解同步锁
+ */
+@Target({ElementType.PARAMETER, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Servicelock {
+	 String description()  default "";
+	//类型
+	Servicelock.LockType lockType() default LockType.DEFAULT;
+
+	enum LockType {
+		DEFAULT
+	}
+}</code>
+</pre>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="mb-10">需要加在任意方法(可以是私有的)上，如：
+                                    <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code> /**
+ * 同步锁机制
+ * @return
+ * @throws Exception
+ */
+@Servicelock
+@ApiMapping(value = "testLock", title = "测试接口-同步锁", description = "该接口被加入同步锁，共享数据只允许单线程操作")
+public String testLock() throws Exception{
+    threadNum++;
+    long l = new Double(10000*Math.random()).longValue();
+    System.err.println("线程:"+threadNum+",进入，随机睡眠时间："+l+" ms");
+    if(ticket<=0){
+        return "线程:"+threadNum+"买票,没有票了";
+    }else{
+        Thread.sleep(l);//买票操作，用随机时间模拟买票0~10秒
+        ticket--;
+        return "线程:"+threadNum+"买票,剩余票数:"+ticket;
+    }
+}
+
+//没有加同步锁，会有负数票数的情况
+@ApiMapping(value = "testLock2", title = "测试接口-同步锁2", description = "该接口没有被加入同步锁")
+public String testLock2() throws Exception{
+    threadNum2++;
+    long l = new Double(10000*Math.random()).longValue();
+    System.err.println("线程:"+threadNum2+",进入，随机睡眠时间："+l+" ms");
+    if(ticket2<=0){
+        return "线程:"+threadNum2+"买票,没有票了";
+    }else{
+        Thread.sleep(l);//买票操作，用随机时间模拟买票0~10秒
+        ticket2--;
+        return "线程:"+threadNum2+"买票,剩余票数:"+ticket2;
+    }
+}</code>
+</pre>
+                                    </p>
+                                </li>
+                            </ol>
+                        </div>
+                        <div id="dongtai" class="pt-30">
+                            <div class="doc-title">
+                                <h2>动态修改</h2>
+                            </div>
+                            <div class="box">
+                                <p class="mt-10">我们动态改变上面介绍的方法testReturn，先看一下方法testReturn的返回值是设置的不封装的：</p>
+                                <a href="http://hoppinzq.com/user/zhangqi3qw/fhzbz.png"
+                                   class="img-light"
+                                   rel="lightbox"><img
+                                        src="http://hoppinzq.com/user/zhangqi3qw/fhzbz.png" alt=""/></a>
+                                <p class="mb-10">先写一个接口，动态改变方法testReturn的内容：</p>
+                                <pre data-simplebar="" class="code-box"><button class="copy-btn">复制</button>
+<code>@ApiMapping(value = "change", title = "测试接口-改变方法testReturn，使其封装返回值，并返回日志")
+public void change(){
+    List&lt;ServiceApiBean&gt; serviceApiBeans= apiCache.outApiList;
+    List&lt;ServiceMethodApiBean&gt; serviceMethods=serviceApiBeans.get(0).getServiceMethods();
+    for(ServiceMethodApiBean serviceMethodApiBean:serviceMethods){
+        if("testReturn".equals(serviceMethodApiBean.getServiceMethod())){
+            serviceMethodApiBean.setMethodReturn(true);
+            serviceMethodApiBean.setLog(true);
+        }
+    }
+}</code>
+</pre>
+                                <p class="mb-10">再次调用testReturn，发现其实现细节已被修改：</p>
+                                <a href="http://hoppinzq.com/user/zhangqi3qw/fzhl.png"
+                                   class="img-light"
+                                   rel="lightbox"><img
+                                        src="http://hoppinzq.com/user/zhangqi3qw/fzhl.png" alt=""/></a>
+                            </div>
+                        </div>
+                        <div id="zwagger_show" class="pt-30">
+                            <div class="doc-title">
+                                <h2>zwagger接口可视化与配置</h2>
+                            </div>
+                            <div class="box">
+                                <div class="zwagger">
+                                    <p class="mb-10">
+                                        若你的项目集成了该网关，则内置了一个接口http://127.0.0.1:端口号/apiParams。
+                                    </p>
+                                    <a href="http://hoppinzq.com/user/zhangqi3qw/neizhi.png"
+                                       class="img-light"
+                                       rel="lightbox"><img
+                                            src="http://hoppinzq.com/user/zhangqi3qw/neizhi.png" alt=""/></a>
+                                    <p class="mb-10">
+                                        通过该接口的返回值，在页面回显，就成了自己的swagger了。你可以访问<a href="http://hoppin.cn/zwagger.html" target="_blank" class="ticket">博客项目的zwagger</a>
+                                    </p>
+                                    <p class="mt-10 djzw" style="cursor: pointer">演示用博客项目接口<span class="fw-bold">[点击渲染]</span></p>
+                                    <div class="zwagger-api">
+                                        <input type="hidden" id="zwagger-data" value="${api!}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-12">
+                <div class="footer-content">
+                    <div class="logo">
+                        <a href="javascript:void(0)">
+                            <img src="http://hoppinzq.com/static/images/logo/1640338711_113639.png" alt="logo">
+                        </a>
+                    </div>
+                    <p>如果觉得该文档很有帮助，可通过一下方式联系我！Enjor coding！</p>
+                    <ul class="social">
+                        <li><a href="https://gitee.com/hoppin"><i class="lni lni-github-original"></i></i></a></li>
+                        <li><a href="javascript:void(0)" title="HOPPIN_HAZZ"><i class="lni lni-wechat"></i></a></li>
+                        <li><a href="tel:15028582175"><i class="lni lni-phone"></i></a></li>
+                        <li><a href="mailto:anmiezata@163.com"><i class="lni lni-envelope"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copy-right bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <p><a target="_blank" href="https://beian.miit.gov.cn/">Copyright © HOPPINZQ.
+                        ICP主体备案号:鲁ICP备2021023310号</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<a href="#" class="scroll-top">
+    <i class="lni lni-chevron-up"></i>
+</a>
+<script src="http://hoppinzq.com/spider/js/jquery.min.js"></script>
+<script src="http://hoppinzq.com/spider/js/popper.min.js"></script>
+<script src="http://hoppinzq.com/spider/js/bootstrap.min.js"></script>
+<script src="http://hoppinzq.com/spider/js/simple-bar.js"></script>
+<script src="http://hoppinzq.com/static/js/plugins/lightbox-2.6.min.js"></script>
+<script src="http://hoppinzq.com/static/js/vendor/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://hoppinzq.com/user/zhangqi3qw/zTree/js/jquery.ztree.core.js"></script>
+<script src="http://hoppinzq.com/user/zhangqi3qw/zTree/js/jquery.ztree.excheck.js"></script>
+<script src="http://hoppinzq.com/user/zhangqi3qw/jquery-ui.min.js"></script>
+<script>
+
+    const menuButtonOpen = document.querySelector(".menu-open");
+    const menuButtonClose = document.querySelector(".menu-close");
+    const sidebar = document.querySelector(".doc-sidebar");
+    const docOverlay = document.querySelector(".doc_overlay");
+
+    menuButtonOpen.addEventListener("click", () => {
+        sidebar.classList.add("show");
+        docOverlay.classList.add('open');
+    });
+    menuButtonClose.addEventListener("click", () => {
+        sidebar.classList.remove("show");
+        docOverlay.classList.remove('open');
+    });
+    docOverlay.addEventListener("click", () => {
+        sidebar.classList.remove("show");
+        docOverlay.classList.remove('open');
+    });
+
+    const copyButton = document.querySelectorAll('.copy-btn');
+    copyButton.forEach(element => {
+        element.addEventListener('click', (e) => {
+            $(copyButton).each(function (index, elem) {
+                $(elem).text("复制");
+            });
+            const elem = e.target.parentElement.children[1].innerText;
+            const el = document.createElement('textarea');
+            el.value = elem;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand("copy");
+            $(element).text("复制成功！");
+
+            document.body.removeChild(el)
+        })
+    });
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    $(function () {
+        $.fn.append2 = function(html, callback) {
+            let originalHtmlLength = $("body").html().length;
+            this.append(html);
+            let nums = 1;
+            let timer1 = setInterval(function() {
+                nums++;
+                let clearIntervalfun = function() {
+                    clearInterval(timer1)
+                    callback();
+                }
+                let flag = originalHtmlLength != $("body").html().length || nums > 1000;
+                flag && clearIntervalfun()
+            }, 1)
+        };
+        window.setTimeout(fadeout, 500);
+        $(".img-light").on("click", function () {
+            let $img = $(this).find("img")[0];
+            $(".lb-outerContainer").width($img.width * 2).height($img.height);
+            $("#lightbox").css("position", "fixed");
+            $("#lightbox").css("top", "400px !important");//先写死
+        });
+        window.onscroll = function () {
+            var backToTo = document.querySelector(".scroll-top");
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                backToTo.style.display = "flex";
+            } else {
+                backToTo.style.display = "none";
+            }
+        };
+        let navbarToggler = document.querySelector(".mobile-menu-btn");
+        navbarToggler.addEventListener('click', function () {
+            navbarToggler.classList.toggle("active");
+        });
+        $("#params_tree").append2(`<ul id="paramsTree" class="ztree"></ul>`,function () {
+
+            $('.tabnav li').off("click").on("click",function () {
+                $('.tabnav li').removeClass('active')
+                $(this).addClass('active');
+                var pd = $(this).index();
+                $('.tabcon li').hide()
+                $('.tabcon li').eq(pd).show();
+            })
+            $.fn.zTree.init($("#paramsTree"), {
+                treeObj: null,
+                check: {
+                    enable: false
+                },
+                data: {
+                    simpleData: {
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "pId",
+                        rootPId: 0
+                    }
+                },
+                callback: {
+                    onExpand: function () {
+                        let box = document.getElementById('paramsTree_1');
+                        let h = box.clientHeight;
+                        let box2 = document.getElementById('params_tree');
+                        box2.style.height = h+'px';
+                    },
+                    onCollapse: function () {
+                        let box = document.getElementById('paramsTree_1');
+                        let h = box.clientHeight;
+                        let box2 = document.getElementById('params_tree');
+                        box2.style.height = h+'px';
+                    }
+                },
+                view: {
+                    showLine: false,
+                    showIcon: false,
+                    showTitle: false,
+                }
+            }, zNodes);
+            let zTree = $.fn.zTree.getZTreeObj("paramsTree")
+            zTree.cancelSelectedNode();
+            zTree.checkAllNodes(false);
+            $( "#params_tree" ).draggable({ scroll: true, axis: "x"  });
+            $("#sqzh").click(function () {
+                $("#paramsTree_1_switch").click();
+            })
+
+        })
+
+        $(".djzw").click(function () {
+            $(".djzw").off("click");
+            $(".zwagger-api").html("");
+            let url="";
+            $.get("http://1.15.232.156/apiParams", function (data) {
+                let api = data.api;
+                $.each(api, function (index_service, service) {
+                    let $zwagger_def = $("<div class=\"panel panel-default\"></div>");
+                    $zwagger_def.append(`<div class="panel-heading zwagger-service-title">${service.apiServiceTitle}<span class="zwagger-service-hide ">收起/展开</span></div><div class="panel-body zwagger-service-description"><p>${service.apiServiceDescription}</p></div>`)
+                    let $panelBody = $('<div class="panel-body zwagger-body"></div>');
+                    let $zwaggerService = $(`<div class="panel-group zwagger-service" id="zwagger-service-${index_service}" role="tablist" aria-multiselectable="true"></div>`);
+                    let serviceMethods = service.serviceMethods;
+                    $.each(serviceMethods, function (index_method, method) {
+                        let zwaggerMethod = $(`<div class="panel panel-default zwagger-method"></div>`);
+                        let $methodHead = $(`<div class="panel-heading zwagger-method-header" role="tab" id="zwagger-service-${index_service}-method-${index_method}-heading">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#zwagger-service-${index_service}" href="#zwagger-service-${index_service}-method-${index_method}" aria-expanded="true" aria-controls="zwagger-service-${index_service}-method-${index_method}">
+								${method.serviceMethod}<span class="method-title">${method.methodTitle}</span>
+								</a>
+							</h4>
+						</div>`);
+                        zwaggerMethod.append($methodHead)
+                        let $method = $(`<div id="zwagger-service-${index_service}-method-${index_method}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="zwagger-service-${index_service}-method-${index_method}-heading"></div>`);
+                        let $methodPanel = $("<div class=\"panel-body\"></div>");
+                        $methodPanel.append(`<p>${method.methodDescription}</p>`);
+                        //表格1
+                        let methodParms = method.serviceMethodParams;
+                        let $zwaggerParamsTable = $(`<div class="col-lg-6 col-sm-12"></div>`)
+                        let $zwaggerParamsTable2 = $(`<div class="panel panel-default"></div>`);
+                        $zwaggerParamsTable2.append(`<div class="panel-heading">入参</div>`);
+                        $.each(methodParms, function (index_params, param) {
+                            let $table = $(`<table class="table table-hover table-params"></table>`);
+                            if (param.serviceMethodParamTypeParams.length == 0) {
+                                $table.append(`<caption>${param.serviceMethodParamType}  ${param.serviceMethodParamName}</caption>`);
+                            } else {
+                                let $tbody = $("<tbody></tbody>");
+                                $.each(param.serviceMethodParamTypeParams, function (index_method_param, method_param) {
+                                    $tbody.append(`<tr><th>${method_param.beanParamName}</th><th>${method_param.beanParamType}</th><th></th></tr>`)
+                                })
+                                $table.append(`<caption>${param.serviceMethodParamType}——${param.serviceMethodParamName}<span class="zwagger-param-hide">收起/展开</span></caption>
+							<thead><tr><th>字段名</th><th>数据类型</th><th>注释</th></tr></thead>
+							<tbody>${$tbody.html()}</tbody>`);
+                            }
+                            $zwaggerParamsTable2.append($table);
+                        })
+                        $zwaggerParamsTable.append($zwaggerParamsTable2)
+                        //表格1
+                        $methodPanel.append($zwaggerParamsTable);
+                        //表格2
+                        let $zwaggerReturnTable = $(`<div class="col-lg-6 col-sm-12">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">返回值</div>
+                    <table class="table table-hover">
+                      <caption>${method.serviceMethodReturn.rawType == undefined ? method.serviceMethodReturn : method.serviceMethodReturn.rawType}<span class="zwagger-param-hide">收起/展开</span></caption>
+                      ${method.serviceMethodReturn.rawType == undefined ? "" : "<caption>泛型：" + method.serviceMethodReturn.actualTypeArguments[0] + "</caption>"}
+                      <thead>
+                        <tr>
+                          <th>字段名</th>
+                          <th>数据类型</th>
+                          <th>注释</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>`);
+                        $methodPanel.append($zwaggerReturnTable);
+
+                        //额外信息
+                        let $zwaggerForm = $(`<div class="col-lg-12 col-sm-12 zwagger-form">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">代理额外内容</div>
+                    <div class="panel-body">
+                      <p>这些是额外信息<span class="zwagger-extra-hide">收起/展开</span></p>
+                    </div>
+                    <div class="row form-group form-inline">
+                      <div class="col-lg-2">
+                        <span>是否缓存</span>
+                      </div>
+                      <div class="col-lg-2">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" ${method.isCache ? "checked" : ""}>是
+                          </label>
+                          <label>
+                            <input type="checkbox" ${method.isCache ? "" : "checked"}>否
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-lg-2">
+                        <span>缓存时间</span>
+                      </div>
+                      <div class="col-lg-2">
+                        <span>${method.cacheTime}</span>
+                      </div>
+                      <div class="col-lg-2">
+                        <span>是否存在缓存数据</span>
+                      </div>
+                      <div class="col-lg-2">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" ${method.cache ? "checked" : ""}>是
+                          </label>
+                          <label>
+                            <input type="checkbox" ${method.cache ? "" : "checked"}>否
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row form-group form-inline">
+                      <div class="col-lg-2">
+                        <span>是否限流</span>
+                      </div>
+                      <div class="col-lg-2">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" ${method.isLimit ? "checked" : ""}>是
+                          </label>
+                          <label>
+                            <input type="checkbox" ${method.isLimit ? "" : "checked"}>否
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-lg-2">
+                        <span>限流次数</span>
+                      </div>
+                      <div class="col-lg-2">
+                        <span>${method.limitNumber}</span>
+                      </div>
+                      <div class="col-lg-2">
+                        <span>是否加同步锁</span>
+                      </div>
+                      <div class="col-lg-2">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" ${method.isLock ? "checked" : ""}>是
+                          </label>
+                          <label>
+                            <input type="checkbox" ${method.isLock ? "" : "checked"}>否
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row form-group form-inline">
+                      <div class="col-lg-3">
+                        <span>接收请求类型</span>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" ${method.requestType == "GET" ? "checked" : ""}>仅GET请求
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" ${method.requestType == "POST" ? "checked" : ""}>仅POST请求
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" ${method.requestType == "ALL" ? "checked" : ""}>不限制
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row form-group form-inline">
+                      <div class="col-lg-2">
+                        <span>调用权限</span>
+                      </div>
+                      <div class="col-lg-10">
+                        <div class="col-lg-3">
+                          <div class="checkbox">
+                            <label>
+                              <input type="checkbox" ${method.methodRight == "NO_RIGHT" ? "checked" : ""}>未登录权限
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-lg-3">
+                          <div class="checkbox">
+                            <label>
+                              <input type="checkbox" ${method.methodRight == "LOGIN" ? "checked" : ""}>登录权限
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-lg-3">
+                          <div class="checkbox">
+                            <label>
+                              <input type="checkbox" ${method.methodRight == "MEMBER" ? "checked" : ""}><span>会员权限</span>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-lg-3">
+                          <div class="checkbox">
+                            <label>
+                              <input type="checkbox" ${method.methodRight == "ADMIN" ? "checked" : ""}>超级管理员权限
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row form-group form-inline">
+                      <div class="col-lg-3">
+                        <span>是否幂等</span>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" ${method.tokenCheck ? "checked" : ""}>是
+                          </label>
+                          <label>
+                            <input type="checkbox" ${method.tokenCheck ? "" : "checked"}>否
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <span>是否封装返回值</span>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" ${method.methodReturn ? "checked" : ""}>是
+                          </label>
+                          <label>
+                            <input type="checkbox" ${method.methodReturn ? "" : "checked"}>否
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row form-group form-inline">
+                      <div class="col-lg-2">
+                        <span>超时机制</span>
+                      </div>
+                      <div class="col-lg-2">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" ${method.isTimeout ? "checked" : ""}>是
+                          </label>
+                          <label>
+                            <input type="checkbox" ${method.isTimeout ? "" : "checked"}>否
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-lg-2">
+                        <span>超时时间</span>
+                      </div>
+                      <div class="col-lg-2">
+                        <span>${method.timeout}</span>
+                      </div>
+                  </div>
+                </div>`);
+                        $methodPanel.append($zwaggerForm)
+                        $method.append($methodPanel);
+                        zwaggerMethod.append($method)
+                        $zwaggerService.append(zwaggerMethod);
+                    })
+                    $panelBody.append($zwaggerService);
+                    $zwagger_def.append($panelBody);
+                    $zwagger_def.appendTo($(".zwagger-api"));
+                })
+                $(".zwagger-param-hide").off("click").on("click", function () {
+                    $(this).parents("table").find("thead,tbody").each(function (index, element) {
+                        $(element).fadeToggle(500);
+                    })
+                });
+                $(".zwagger-extra-hide").off("click").on("click", function () {
+                    $(this).parents(".panel").find(".form-inline").each(function (index, element) {
+                        $(element).fadeToggle(500);
+                    })
+                });
+                $(".zwagger-service-hide").off("click").on("click", function () {
+                    $(this).parents(".panel").children(".zwagger-body").fadeToggle(500)
+                });
+                $(".checkbox").css("pointer-events", "none");
+            })
+        })
+
+    })
+
+    function fadeout() {
+        document.querySelector('.preloader').style.opacity = '0';
+        document.querySelector('.preloader').style.display = 'none';
+    }
+</script>
+<script>
+
+    let zNodes = [{
+        "id": "0",
+        "name": "RequestParam类参数"
+    },{
+        "id": "1",
+        "pId": "0",
+        "name": "String url;//本次请求的url"
+    }, {
+        "id": "2",
+        "pId": "0",
+        "name": "String cacheKey;//本次请求缓存的标志key"
+    }, {
+        "id": "3",
+        "pId": "0",
+        "name": "int cacheTime;//缓存时间"
+    },{
+        "id": "4",
+        "pId": "0",
+        "name": "String params;//本次请求携带的参数列表"
+    },{
+        "id": "5",
+        "pId": "0",
+        "name": "String method;//本次请求的目标方法"
+    },{
+        "id": "6",
+        "pId": "0",
+        "name": "String sign;//本次请求携带的签名"
+    },{
+        "id": "7",
+        "pId": "0",
+        "name": "String encode;//本次请求携带的加密字符串，也就是参数列表"
+    },{
+        "id": "8",
+        "pId": "0",
+        "name": "String token;//本次请求携带的token"
+    },{
+        "id": "9",
+        "pId": "0",
+        "name": "String timestamp;//本次请求携带的时间戳"
+    },{
+        "id": "10",
+        "pId": "0",
+        "name": "Object result;//本次请求响应的数据"
+    },{
+        "id": "11",
+        "pId": "0",
+        "name": "ApiRunnable apiRunnable;//本次请求调用方法的反射对象"
+    },{
+        "id": "11_1",
+        "pId": "11",
+        "name": "String apiName;//本次请求调用api名称"
+    },{
+        "id": "11_2",
+        "pId": "11",
+        "name": "Method targetMethod;//本次请求的目标方法"
+    },{
+        "id": "11_3",
+        "pId": "11",
+        "name": "String targetName;//本次请求调用实例名称"
+    },{
+        "id": "11_4",
+        "pId": "11",
+        "name": "Object target;//本次请求实例对象"
+    },{
+        "id": "11_5",
+        "pId": "11",
+        "name": "ServiceMethodApiBean serviceMethodApiBean;//本次请求调用方法bean参数"
+    },{
+        "id": "11_5_1",
+        "pId": "11_5",
+        "name": "ApiMapping.RoleType methodRight;//方法权限"
+    },{
+        "id": "11_5_1_1",
+        "pId": "11_5_1",
+        "name": "NO_RIGHT//不校验权限"
+    },{
+        "id": "11_5_1_2",
+        "pId": "11_5_1",
+        "name": "LOGIN//校验登录权限"
+    },{
+        "id": "11_5_1_3",
+        "pId": "11_5_1",
+        "name": "MEMBER//校验登录权限及会员权限，付费用户"
+    },{
+        "id": "11_5_1_4",
+        "pId": "11_5_1",
+        "name": "ADMIN//超级管理员"
+    },{
+        "id": "11_5_2",
+        "pId": "11_5",
+        "name": "ApiMapping.Type requestType;//请求类型"
+    },{
+        "id": "11_5_2_1",
+        "pId": "11_5_2",
+        "name": "GET,//只允许GET请求"
+    },{
+        "id": "11_5_2_2",
+        "pId": "11_5_2",
+        "name": "POST,//只允许POST请求"
+    },{
+        "id": "11_5_2_3",
+        "pId": "11_5_2",
+        "name": "ALL,//所有请求都可"
+    },{
+        "id": "11_5_3",
+        "pId": "11_5",
+        "name": "boolean methodReturn;//方法是否封装返回值，"
+    },{
+        "id": "11_5_4",
+        "pId": "11_5",
+        "name": "boolean tokenCheck;//方法是否需要实现自动幂等"
+    },{
+        "id": "11_5_5",
+        "pId": "11_5",
+        "name": "String methodTitle;//方法标题（ApiMapping注解）"
+    },{
+        "id": "11_5_6",
+        "pId": "11_5",
+        "name": "String methodDescription;//方法描述（ApiMapping注解）"
+    },{
+        "id": "11_5_7",
+        "pId": "11_5",
+        "name": "String serviceMethod;//方法标识（ApiMapping注解）"
+    },{
+        "id": "11_5_8",
+        "pId": "11_5",
+        "name": "List<Map> serviceMethodParams;//方法参数列表"
+    },{
+        "id": "11_5_9",
+        "pId": "11_5",
+        "name": "Type serviceMethodReturn;//方法返回值类型"
+    },{
+        "id": "11_5_10",
+        "pId": "11_5",
+        "name": "Object serviceMethodReturnParams;//方法返回值参数列表"
+    },{
+        "id": "11_5_11",
+        "pId": "11_5",
+        "name": "int cacheTime;//返回值缓存时间"
+    },{
+        "id": "11_5_12",
+        "pId": "11_5",
+        "name": "boolean isCache;//是否缓存"
+    },{
+        "id": "11_5_13",
+        "pId": "11_5",
+        "name": "boolean isLock;//是否加同步锁"
+    },{
+        "id": "11_5_14",
+        "pId": "11_5",
+        "name": "boolean isLimit;//是否限流"
+    },{
+        "id": "11_5_15",
+        "pId": "11_5",
+        "name": "int limitNumber;//限流次数"
+    },{
+        "id": "11_5_16",
+        "pId": "11_5",
+        "name": "boolean isTimeout;//是否超时"
+    },{
+        "id": "11_5_17",
+        "pId": "11_5",
+        "name": "int timeout;//设置的超时时长"
+    },{
+        "id": "11_5_18",
+        "pId": "11_5",
+        "name": "boolean isLog;//是否返回日志"
+    },{
+        "id": "12",
+        "pId": "0",
+        "name": "List<FormInfo> formInfoList;//本次请求解析的表单数据（文件上传数据也在该参数内）"
+    },{
+        "id": "12_1",
+        "pId": "12",
+        "name": "String name;//表单的name属性"
+    },{
+        "id": "12_2",
+        "pId": "12",
+        "name": "long size;//文件大小（仅上传文件时有值）"
+    },{
+        "id": "12_3",
+        "pId": "12",
+        "name": "String contentType;//内容类型（仅上传文件时有值）"
+    },{
+        "id": "12_4",
+        "pId": "12",
+        "name": "String submittedFileName;//上传的文件名（仅上传文件时有值）"
+    },{
+        "id": "12_5",
+        "pId": "12",
+        "name": "String inputStream;//表单的值或文件流"
+    },{
+        "id": "13",
+        "pId": "0",
+        "name": "HttpServletRequest request;"
+    },{
+        "id": "14",
+        "pId": "0",
+        "name": "HttpServletResponse response;"
+    },{
+        "id": "15",
+        "pId": "0",
+        "name": "RequestInfo log;//本次请求的日志"
+    },{
+        "id": "15_1",
+        "pId": "15",
+        "name": "String id;//日志ID"
+    },{
+        "id": "15_2",
+        "pId": "15",
+        "name": "String ip;//请求来源IP"
+    },{
+        "id": "15_3",
+        "pId": "15",
+        "name": "String url;//请求的url"
+    },{
+        "id": "15_4",
+        "pId": "15",
+        "name": "String logLevel;//日志级别 INFO 跟 ERROR 报错就是ERROR"
+    },{
+        "id": "15_5",
+        "pId": "15",
+        "name": "String httpMethod;//请求类型 GET POST"
+    },{
+        "id": "15_6",
+        "pId": "15",
+        "name": "String classMethod;//请求的类中的哪个方法"
+    },{
+        "id": "15_7",
+        "pId": "15",
+        "name": "Object requestParams;//传参"
+    },{
+        "id": "15_8",
+        "pId": "15",
+        "name": "Object result;//返参，报错无"
+    },{
+        "id": "15_9",
+        "pId": "15",
+        "name": "String createTime;//创建时间"
+    },{
+        "id": "15_10",
+        "pId": "15",
+        "name": "Long timeCost;//响应时间（只计算请求开始跟结束的时间差，请求结束前会异步入库，不影响响应时间，不考虑这块时间），报错无"
+    },{
+        "id": "15_11",
+        "pId": "15",
+        "name": "String exception;//报错内容"
+    },{
+        "id": "16",
+        "pId": "0",
+        "name": "Object user;//本次请求的zauth认证的当前登录人（如果没有就是null）"
+    },{
+        "id": "16_1",
+        "pId": "16",
+        "name": "long id;"
+    },{
+        "id": "16_2",
+        "pId": "16",
+        "name": "String username;"
+    },{
+        "id": "16_3",
+        "pId": "16",
+        "name": "String password;"
+    },{
+        "id": "16_4",
+        "pId": "16",
+        "name": "String phone;"
+    },{
+        "id": "16_5",
+        "pId": "16",
+        "name": "String email;"
+    },{
+        "id": "16_6",
+        "pId": "16",
+        "name": "String description;"
+    },{
+        "id": "16_7",
+        "pId": "16",
+        "name": "Date create;"
+    },{
+        "id": "16_8",
+        "pId": "16",
+        "name": "Date update;"
+    },{
+        "id": "16_9",
+        "pId": "16",
+        "name": "String image;"
+    },{
+        "id": "16_10",
+        "pId": "16",
+        "name": "int userright;//权限"
+    },{
+        "id": "16_11",
+        "pId": "16",
+        "name": "int code;//可以是邮箱验证码，也可以是手机验证码，一般是手机验证码"
+    },{
+        "id": "16_12",
+        "pId": "16",
+        "name": "String token;"
+    },{
+        "id": "16_13",
+        "pId": "16",
+        "name": "int isRemember;//默认是0，不记住用户名密码"
+    },{
+        "id": "16_14",
+        "pId": "16",
+        "name": "int state;//登录状态"
+    },{
+        "id": "16_15",
+        "pId": "16",
+        "name": "String login_type;"
+    },{
+        "id": "16_16",
+        "pId": "16",
+        "name": "Object extra_message;//额外的信息"
+    },];
+</script>
+</body>
+</html>
